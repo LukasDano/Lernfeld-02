@@ -1,2 +1,0 @@
-Wie kann ich per Consolen Eingabe bestimmte Mehtoden aufrufen?
-    - Bisher kann ich das nur über y/n machen und das geht dann alles vom Programm aus

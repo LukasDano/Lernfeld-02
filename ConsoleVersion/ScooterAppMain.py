@@ -1,27 +1,23 @@
 import ScooterRentalApp
 
 app = ScooterRentalApp
-again = True
 
-while again:
+print("Digitale Scooter App")
+print("\n \n \n")
+
+while True:
 
     if __name__ == "__main__":
-        print("Digitale Scooter App")
-        print("\n \n \n")
 
-        ausleihen = input("Scooter ausleihen (y/n)? ")
+        print("Optionen: \n")
+        print("1. Scooter ausleihen")
+        print("2. Daten der aktuellen Fahrt abfragen")
 
-        if ausleihen == "y":
+        print("\n")
+        auszuführendeMehtode = input("Was möchtest du machen?")
+
+        if auszuführendeMehtode == "1" or auszuführendeMehtode == "ausleihen":
             app.scooterAusleihen()
-        else:
-            print("Scooter nicht ausgeliehen")
         
-        
-        abfragen = input("Aktuelle Datenabfragen (y/n)? ")
-        
-        if abfragen == "y":
+        if auszuführendeMehtode == "2" or auszuführendeMehtode == "abfragen":
             app.datenZurAktuellenFahrt()
-        else:
-            print("Nicht abgefragt")
-
-        again = input("Noch einmal (True/False)? ")

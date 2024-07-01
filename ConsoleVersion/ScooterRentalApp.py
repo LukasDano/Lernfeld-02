@@ -1,6 +1,6 @@
 import datetime
 
-gebühr = 1
+gebuehr = 1
 pricePerMinute = 0.10
 
 ausleihZeitpunkt = [0, 0, 0]
@@ -18,21 +18,23 @@ def getTimeDifferance():
 
     zeitpunkt1 = ausleihZeitpunkt
     zeitpunkt2 = getCurrentTimeStamp()
-    differenz = [0, 0, 0]
+    differenz = [0, 0]
     
     differenz[0] = zeitpunkt2[0] - zeitpunkt1[0]
     differenz[1] = zeitpunkt2[1] - zeitpunkt1[1]
-    differenz[2] = zeitpunkt2[2] - zeitpunkt1[2]
 
     print("Differenz:", differenz)
     return differenz
 
 def getPrice(timeInMinutes):
-    price = timeInMinutes * pricePerMinute + gebühr
+    price = timeInMinutes * pricePerMinute + gebuehr
     formattedPrice = "{:.2f}".format(price)
     return formattedPrice
 
 def scooterAusleihen():
+    global scooterAusgeliehen
+    scooterAusgeliehen = True
+
     print("\n\n")
     print("- Scooter Ausleihen -")
     print("\n")
@@ -43,13 +45,19 @@ def scooterAusleihen():
     ausleihZeitpunkt[1] = aktuelleZeit[1]
     ausleihZeitpunkt[2] = aktuelleZeit[2]
 
-    print(f"Scooter ausgeliehen um: {ausleihZeitpunkt[0]} Stunden {ausleihZeitpunkt[1]} Minuten")
-    print(f"Die Gebühr zum Ausleihen eines Scooters beträgt {gebühr}€")
+    formattedgebuehr = "{:.2f}".format(gebuehr)
+
+    print(f"Scooter ausgeliehen um: {ausleihZeitpunkt[0]}:{ausleihZeitpunkt[1]} Uhr")
+    print(f"Die Gebühr zum Ausleihen eines Scooters beträgt {formattedgebuehr}€")
     print(f"Der Preis pro Angefangene Minute beträgt {pricePerMinute}€")
 
-    scooterAusgeliehen = True
+    
 
 def datenZurAktuellenFahrt():
+    if scooterAusgeliehen == False:
+        print("Bisher wurde noch kein Scooter ausgeliehen!")
+        return
+    
     print("\n\n")
     print("- Die Daten zu deiner aktuellen Fahrt -")
     print("\n")
@@ -57,15 +65,13 @@ def datenZurAktuellenFahrt():
     timeDifference = getTimeDifferance()
     hours = timeDifference[0]
     minutes = timeDifference[1]
-    seconds = timeDifference[2]
-
-    if timeDifference[0] < 0:
-        print("Bisher wurde noch kein Scooter ausgeliehen!")
-        return
+    seconds = getCurrentTimeStamp()[2]
 
     print(f"Ausgeliehene Zeit: {hours} Stunden {minutes} Minuten")
 
     timeInMinutes = hours * 60 + minutes
+    if seconds != 0:
+        timeInMinutes += 1
 
     price = getPrice(timeInMinutes)
     print(f"Aktueller Preis dieser Fahrt: {price}€")
