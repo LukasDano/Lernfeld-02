@@ -45,11 +45,11 @@ def scooterAusleihen():
     ausleihZeitpunkt[1] = aktuelleZeit[1]
     ausleihZeitpunkt[2] = aktuelleZeit[2]
 
-    formattedgebuehr = "{:.2f}".format(gebuehr)
+    formattedPricePerMinute = "{:.2f}".format(pricePerMinute)
 
     print(f"Scooter ausgeliehen um: {ausleihZeitpunkt[0]}:{ausleihZeitpunkt[1]} Uhr")
-    print(f"Die Gebühr zum Ausleihen eines Scooters beträgt {formattedgebuehr}€")
-    print(f"Der Preis pro Angefangene Minute beträgt {pricePerMinute}€")
+    print(f"Die Gebühr zum Ausleihen eines Scooters beträgt {gebuehr}€")
+    print(f"Der Preis pro Angefangene Minute beträgt {formattedPricePerMinute}€")
 
     
 
@@ -68,6 +68,7 @@ def datenZurAktuellenFahrt():
     seconds = getCurrentTimeStamp()[2]
 
     print(f"Ausgeliehene Zeit: {hours} Stunden {minutes} Minuten")
+    print("Seconds", seconds)
 
     timeInMinutes = hours * 60 + minutes
     if seconds != 0:
