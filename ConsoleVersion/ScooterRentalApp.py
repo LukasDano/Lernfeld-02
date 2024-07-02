@@ -11,9 +11,12 @@ def getCurrentTimeStamp():
     hours = datetime.datetime.now().strftime("%H")
     minutes = datetime.datetime.now().strftime("%M")
     seconds = datetime.datetime.now().strftime("%S")
-    
-    aktuellerZeitpunkt = [int(hours), int(minutes), int(seconds)]
-    return aktuellerZeitpunkt
+
+    formattedHours = "{:.2f}".format(int(hours))
+    formattedMinutes = "{:.2f}".format(int(minutes))
+    formattedSeconds = "{:.2f}".format(int(seconds))
+
+    return [formattedHours, formattedMinutes, formattedSeconds]
 
 def getTimeDifferance(fruehererZeitpunkt, spaetererZeitpunkt):
 
@@ -54,7 +57,7 @@ def scooterAusleihen():
 
 def datenZurAktuellenFahrt():
     if scooterAusgeliehen == False:
-        print("Bisher wurde noch kein Scooter ausgeliehen!")
+        print("Es ist keine Scooter ausgeliehen!")
         return
     
     print("\n\n")
@@ -70,7 +73,7 @@ def datenZurAktuellenFahrt():
     seconds = getCurrentTimeStamp()[2]
 
     print(f"Ausgeliehene Zeit: {hours} Stunden {minutes} Minuten")
-    print("Seconds", seconds)
+    #print("Seconds", seconds)
 
     timeInMinutes = hours * 60 + minutes
     if seconds != 0:
@@ -80,6 +83,10 @@ def datenZurAktuellenFahrt():
     print(f"Aktueller Preis dieser Fahrt: {price}€")
 
 def scooterZurueckgeben():
+    if scooterAusgeliehen == False:
+        print("Es ist keine Scooter ausgeliehen!")
+        return
+    
     rueckgabeZeitpunkt = getCurrentTimeStamp()
 
     global scooterAusgeliehen

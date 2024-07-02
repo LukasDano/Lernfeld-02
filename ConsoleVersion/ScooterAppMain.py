@@ -2,7 +2,7 @@ import ScooterRentalApp
 
 app = ScooterRentalApp
 
-optionZero = list(("0", "exit", "beenden"))
+optionZero = list(("0", "beenden", "exit"))
 optionOne = list(("1", "ausleihen"))
 optionTwo = list(("2", "abfragen"))
 optionThree = list(("3", "zurueckgeben", "zurückgeben"))
@@ -35,4 +35,3 @@ while True:
         
         if auszufuehrendeMehtode in optionThree:
             app.scooterZurueckgeben()
-
