@@ -5,18 +5,18 @@ pricePerMinute = 0.10
 
 ausleihZeitpunkt = [0, 0, 0]
 rueckgabeZeitpunkt = [0, 0, 0]
+reservierungsZeitpunkt = [0, 0]
+
 scooterAusgeliehen = False
+scooterReserviert = False
 
 def getCurrentTimeStamp():
-    hours = datetime.datetime.now().strftime("%H")
-    minutes = datetime.datetime.now().strftime("%M")
-    seconds = datetime.datetime.now().strftime("%S")
+    now = datetime.datetime.now()
+    hours = int(now.strftime("%H"))
+    minutes = int(now.strftime("%M"))
+    seconds = int(now.strftime("%S"))
 
-    formattedHours = "{:.2f}".format(int(hours))
-    formattedMinutes = "{:.2f}".format(int(minutes))
-    formattedSeconds = "{:.2f}".format(int(seconds))
-
-    return [formattedHours, formattedMinutes, formattedSeconds]
+    return [hours, minutes, seconds]
 
 def getTimeDifferance(fruehererZeitpunkt, spaetererZeitpunkt):
 
@@ -34,6 +34,12 @@ def getPrice(timeInMinutes):
     return formattedPrice
 
 def scooterAusleihen():
+    global scooterAusgeliehen, scooterReserviert
+    if scooterReserviert == True:
+        scooterReserviert = False
+        print("Du hast eine Reservierung")
+        print("Dein reservierter Scooter steht dir jetzt zur Verfuegung")
+
     global scooterAusgeliehen
     scooterAusgeliehen = True
 
@@ -83,13 +89,14 @@ def datenZurAktuellenFahrt():
     print(f"Aktueller Preis dieser Fahrt: {price}€")
 
 def scooterZurueckgeben():
+    global scooterAusgeliehen
+
     if scooterAusgeliehen == False:
         print("Es ist keine Scooter ausgeliehen!")
         return
     
     rueckgabeZeitpunkt = getCurrentTimeStamp()
 
-    global scooterAusgeliehen
     scooterAusgeliehen = False
 
     print("\n\n")
@@ -113,4 +120,24 @@ def scooterZurueckgeben():
 
     price = getPrice(timeInMinutes)
     print(f"Preis dieser Fahrt: {price}€")
+
+def scooterReservieren():
+    global scooterReserviert, reservierungsZeitpunkt
+    scooterReserviert = True
+
+    reservierungsZeitpunktHour = input("Reservierungszeitpunkt (HH): ")
+    reservierungsZeitpunktMinute = input("Reservierungszeitpunkt (MM): ")
     
+    reservierungsZeitpunkt = [int(reservierungsZeitpunktHour), int(reservierungsZeitpunktMinute)]
+
+    if scooterReserviert == True:
+        print("Du hast erfolgreich einen Scooter reserviert!")
+
+def uebersichtScooter():
+    
+    if scooterReserviert == True:
+        print("Du hast einen Scooter reserviert")
+        print("Deine Reservierung beginnt um:", reservierungsZeitpunkt[0], ":", reservierungsZeitpunkt[1])
+        return
+    
+    print("Du hast keinen Scooter reserviert")
