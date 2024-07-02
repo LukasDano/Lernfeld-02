@@ -11,3 +11,14 @@ Somit wird es dem Kunden einfach gemacht einen Überblick über die Preise der *
 Darüber hinaus können Scooter auch im Voraus schon reserviert werden und Kunden können eine bessere Übersicht über die Verfügbarkeit der Scooter behalten. <br>
 
 Als Kunde von **ScooTeq** haben sie also keinen Grund sich die App nicht sofort herunterzuladen.
+
+
+### Development Requirements
+
+- [Python](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/download)
+- Eine IDE z.B. [VS Code](https://code.visualstudio.com/) oder [PyCharm](https://www.jetbrains.com/de-de/pycharm/download/?section=windows)
+
+### Tipps
+
+Den Python Interpreter findet man hier "C:\Users\BENUTZER_NAME\AppData\Local\Programs\Python"
