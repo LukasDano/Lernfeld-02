@@ -20,6 +20,7 @@ while True:
             print("- Reminder -")
             print(f"Du hast einen Scooter für {app.reservierungsZeitpunkt[0]}:{app.reservierungsZeitpunkt[1]} Uhr reserviert")
 
+        print("<--------------------------------------->")
         print("Optionen: \n")
         print("0. Beenden")
         print("1. Scooter ausleihen")
