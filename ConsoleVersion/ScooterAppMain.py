@@ -2,6 +2,11 @@ import ScooterRentalApp
 
 app = ScooterRentalApp
 
+optionZero = list(("0", "beenden", "exit"))
+optionOne = list(("1", "ausleihen"))
+optionTwo = list(("2", "abfragen"))
+optionThree = list(("3", "zurueckgeben", "zurückgeben"))
+
 print("Digitale Scooter App")
 print("\n \n \n")
 
@@ -13,17 +18,20 @@ while True:
         print("0. Beenden")
         print("1. Scooter ausleihen")
         print("2. Daten der aktuellen Fahrt abfragen")
+        print("3. Scooter zurueckgeben")
 
 
         print("\n")
-        auszuführendeMehtode = input("Was möchtest du machen?")
+        auszufuehrendeMehtode = input("Was möchtest du machen?")
 
-        if auszuführendeMehtode == "0" or auszuführendeMehtode == "exit" or auszuführendeMehtode == "beenden":
+        if auszufuehrendeMehtode in optionZero:
             break
 
-        if auszuführendeMehtode == "1" or auszuführendeMehtode == "ausleihen":
+        if auszufuehrendeMehtode in optionOne:
             app.scooterAusleihen()
         
-        if auszuführendeMehtode == "2" or auszuführendeMehtode == "abfragen":
+        if auszufuehrendeMehtode in optionTwo:
             app.datenZurAktuellenFahrt()
-
+        
+        if auszufuehrendeMehtode in optionThree:
+            app.scooterZurueckgeben()
