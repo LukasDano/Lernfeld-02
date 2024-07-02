@@ -1,0 +1,7 @@
+Fachliche Punkte beachten:
+    Man soll  nur eine halbe Stunde in die Zukunft reservieren können
+        -> ca. eine halbe Stunde
+
+Wie viele Scooter sind im verfügbar?
+    einfach eine Menge Scooter auswählen
+    -> evtl. mit einer Datenbank lösen (muss man aber nachsehen wie man das umsetzen kann)
