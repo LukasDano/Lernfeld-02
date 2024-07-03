@@ -1,7 +1,9 @@
 import ScooterRentalApp
 import ScooterClass
+import Scooter
 
 app = ScooterRentalApp
+scooter = Scooter.Scooter
 
 scooter01 = ScooterClass.Scooter()
 
@@ -12,8 +14,17 @@ optionThree = list(("3", "zurueckgeben", "zurückgeben"))
 optionFour = list(("4", "reservieren"))
 optionFive = list(("5", "uebersicht"))
 
+scooter_list = []
+
+for i in range(10):
+    scooter_for_list = scooter(i)
+    scooter_list.append(scooter_for_list)
+print (scooter_list)
+
+# Die eingetliche Anwendung =>
 print("Digitale Scooter App")
 print("\n \n \n")
+
 
 while True:
 
