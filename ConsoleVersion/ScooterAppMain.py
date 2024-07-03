@@ -1,6 +1,9 @@
 import ScooterRentalApp
+import ScooterClass
 
 app = ScooterRentalApp
+
+scooter01 = ScooterClass.Scooter()
 
 optionZero = list(("0", "beenden", "exit"))
 optionOne = list(("1", "ausleihen"))
@@ -50,3 +53,8 @@ while True:
         
         if auszufuehrendeMehtode in optionFive:
             app.uebersichtScooter()
+
+print(scooter01.get_scooterAusgeliehen())  # Ausgabe: False
+
+scooter01.set_scooterAusgeliehen(True)
+print(scooter01.get_scooterAusgeliehen())  # Ausgabe: True
