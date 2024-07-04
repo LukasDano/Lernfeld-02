@@ -62,13 +62,14 @@ def scooterAusleihen():
 
     formattedPricePerMinute = "{:.2f}".format(PRICE_PER_MINUTE)
 
+    print(f"Du hast den Scooter {selected_scooter.id} ausgeliehen.")
     print(f"Scooter ausgeliehen um: {scooter.ausleih_zeitpunkt[0]}:{scooter.ausleih_zeitpunkt[1]} Uhr")
     print(f"Die Gebühr zum Ausleihen eines Scooters beträgt {PRICE_PER_MINUTE}€")
     print(f"Der Preis pro Angefangene Minute beträgt {formattedPricePerMinute}€")
 
     selected_scooter.scooter_ausgeliehen = True
     ausgeliehene_scooter.append(selected_scooter)
-    print(ausgeliehene_scooter)
+    #print(ausgeliehene_scooter)
     
 
 def datenZurAktuellenFahrt():
@@ -100,6 +101,8 @@ def datenZurAktuellenFahrt():
 
     price = getPrice(timeInMinutes)
     print(f"Aktueller Preis dieser Fahrt: {price}€")
+
+    print(f"Du fährst aktuell mit dem Scooter {selected_scooter.id}")
 
 def scooterZurueckgeben():
     if ausgeliehene_scooter:
@@ -156,12 +159,12 @@ def scooterReservieren():
             print("Deine Reservierung liegt zu weit in der Zukunft")
             print("Du kannst maximal eine halbe Stunde in der Zukunft reservieren")
             print("Bitte gib einen gültigen Wert an")
-            
+
             reservierungsZeitpunktHour = input("Reservierungszeitpunkt (HH): ")
             reservierungsZeitpunktMinute = input("Reservierungszeitpunkt (MM): ")
 
     if selected_scooter.scooter_reserviert == True:
-        print("Du hast erfolgreich einen Scooter reserviert!")
+        print(f"Du hast erfolgreich den Scooter {selected_scooter.id} reserviert!")
         ausgeliehene_scooter.append(selected_scooter)
 
 def uebersichtScooter():
