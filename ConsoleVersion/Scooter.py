@@ -1,6 +1,5 @@
 class Scooter:
-    GEBUEHR = 1
-    PRICE_PER_MINUTE = 0.10
+
 
     def __init__(self, id):
         self.id = id
@@ -9,14 +8,6 @@ class Scooter:
         self.reservierungs_zeitpunkt = []
         self.scooter_ausgeliehen = False
         self.scooter_reserviert = False
-
-    @property
-    def gebuehr(self):
-        return self.GEBUEHR
-
-    @property
-    def price_per_minute(self):
-        return self.PRICE_PER_MINUTE
 
     @property
     def id(self):
