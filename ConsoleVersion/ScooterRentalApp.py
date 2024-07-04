@@ -147,9 +147,18 @@ def scooterReservieren():
     reservierungsZeitpunktHour = input("Reservierungszeitpunkt (HH): ")
     reservierungsZeitpunktMinute = input("Reservierungszeitpunkt (MM): ")
 
-    selected_scooter.reservierungs_zeitpunkt = [int(reservierungsZeitpunktHour), int(reservierungsZeitpunktMinute)]
+    if reservierungsZeitraumpruefen(int(reservierungsZeitpunktHour), int(reservierungsZeitpunktMinute)):
+        selected_scooter.reservierungs_zeitpunkt = [int(reservierungsZeitpunktHour), int(reservierungsZeitpunktMinute)]
+        selected_scooter.scooter_reserviert = True
 
-    selected_scooter.scooter_reserviert = True
+    else:
+        while reservierungsZeitraumpruefen(int(reservierungsZeitpunktHour), int(reservierungsZeitpunktMinute)) == False:
+            print("Deine Reservierung liegt zu weit in der Zukunft")
+            print("Du kannst maximal eine halbe Stunde in der Zukunft reservieren")
+            print("Bitte gib einen gültigen Wert an")
+            
+            reservierungsZeitpunktHour = input("Reservierungszeitpunkt (HH): ")
+            reservierungsZeitpunktMinute = input("Reservierungszeitpunkt (MM): ")
 
     if selected_scooter.scooter_reserviert == True:
         print("Du hast erfolgreich einen Scooter reserviert!")
@@ -180,3 +189,14 @@ def hasReservierung():
     
     return False
 
+def reservierungsZeitraumpruefen(reservierungsZeitpunktHour, reservierungsZeitpunktMinute):
+
+    reservierung = datetime.now().replace(hour=reservierungsZeitpunktHour, minute=reservierungsZeitpunktMinute, second=0, microsecond=0)
+
+    time_difference = reservierung - datetime.now() 
+    max_difference = timedelta(minutes=30)
+
+    if time_difference <= max_difference:
+        return True
+    else:
+        return False
