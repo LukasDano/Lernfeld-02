@@ -1,14 +1,17 @@
-import datetime
+from datetime import *
+import Scooter
 
-gebuehr = 1
-pricePerMinute = 0.10
+scooter = Scooter.Scooter
 
-ausleihZeitpunkt = [0, 0, 0]
-rueckgabeZeitpunkt = [0, 0, 0]
-reservierungsZeitpunkt = [0, 0]
+GEBUEHR = 1
+PRICE_PER_MINUTE = 0.10
 
-scooterAusgeliehen = False
-scooterReserviert = False
+scooter_list = []
+ausgeliehene_scooter = []
+
+for i in range(10):
+    scooter_for_list = scooter(i)
+    scooter_list.append(scooter_for_list)
 
 def getCurrentTimeStamp():
     now = datetime.datetime.now()
@@ -29,19 +32,23 @@ def getTimeDifferance(fruehererZeitpunkt, spaetererZeitpunkt):
     return differenz
 
 def getPrice(timeInMinutes):
-    price = timeInMinutes * pricePerMinute + gebuehr
+    price = timeInMinutes * PRICE_PER_MINUTE + GEBUEHR
     formattedPrice = "{:.2f}".format(price)
     return formattedPrice
 
 def scooterAusleihen():
-    global scooterAusgeliehen, scooterReserviert
-    if scooterReserviert == True:
-        scooterReserviert = False
-        print("Du hast eine Reservierung")
-        print("Dein reservierter Scooter steht dir jetzt zur Verfuegung")
-
-    global scooterAusgeliehen
-    scooterAusgeliehen = True
+    for scooter in scooter_list:
+        if scooter.scooter_reserviert:
+            selected_scooter = scooter
+            selected_scooter.scooter_reserviert = False
+            ausgeliehene_scooter.remove(selected_scooter)
+            break
+        elif not scooter.scooter_ausgeliehen:
+            selected_scooter = scooter
+            break
+            #print(f"Der erste verfügbare Scooter hat die ID: {scooter.id}")
+        else:
+            print("Kein verfügbarer Scooter gefunden.")
 
     print("\n\n")
     print("- Scooter Ausleihen -")
@@ -49,28 +56,35 @@ def scooterAusleihen():
 
     aktuelleZeit = getCurrentTimeStamp()
 
-    ausleihZeitpunkt[0] = aktuelleZeit[0]
-    ausleihZeitpunkt[1] = aktuelleZeit[1]
-    ausleihZeitpunkt[2] = aktuelleZeit[2]
+    scooter.ausleih_zeitpunkt.append(aktuelleZeit[0])
+    scooter.ausleih_zeitpunkt.append(aktuelleZeit[1])
+    scooter.ausleih_zeitpunkt.append(aktuelleZeit[2])
 
-    formattedPricePerMinute = "{:.2f}".format(pricePerMinute)
+    formattedPricePerMinute = "{:.2f}".format(PRICE_PER_MINUTE)
 
-    print(f"Scooter ausgeliehen um: {ausleihZeitpunkt[0]}:{ausleihZeitpunkt[1]} Uhr")
-    print(f"Die Gebühr zum Ausleihen eines Scooters beträgt {gebuehr}€")
+    print(f"Du hast den Scooter {selected_scooter.id} ausgeliehen.")
+    print(f"Scooter ausgeliehen um: {scooter.ausleih_zeitpunkt[0]}:{scooter.ausleih_zeitpunkt[1]} Uhr")
+    print(f"Die Gebühr zum Ausleihen eines Scooters beträgt {PRICE_PER_MINUTE}€")
     print(f"Der Preis pro Angefangene Minute beträgt {formattedPricePerMinute}€")
 
+    selected_scooter.scooter_ausgeliehen = True
+    ausgeliehene_scooter.append(selected_scooter)
+    #print(ausgeliehene_scooter)
     
 
 def datenZurAktuellenFahrt():
-    if scooterAusgeliehen == False:
-        print("Es ist keine Scooter ausgeliehen!")
+    if ausgeliehene_scooter:
+        # Hier wird immer auf das Letze Element der Liste zugegriffen, müsst man noch eleganter  lösen (z.B. indem der Nutzer die ID seines Scooters eingibt)
+        selected_scooter = ausgeliehene_scooter[-1]
+    else:
+        print("Kein Scooter wurde ausgeliehen.")
         return
     
     print("\n\n")
     print("- Die Daten zu deiner aktuellen Fahrt -")
     print("\n")
 
-    fruehererZeitpunkt = ausleihZeitpunkt
+    fruehererZeitpunkt = selected_scooter.ausleih_zeitpunkt
     spaetererZeitpunkt = getCurrentTimeStamp()
 
     timeDifference = getTimeDifferance(fruehererZeitpunkt, spaetererZeitpunkt)
@@ -88,24 +102,27 @@ def datenZurAktuellenFahrt():
     price = getPrice(timeInMinutes)
     print(f"Aktueller Preis dieser Fahrt: {price}€")
 
-def scooterZurueckgeben():
-    global scooterAusgeliehen
+    print(f"Du fährst aktuell mit dem Scooter {selected_scooter.id}")
 
-    if scooterAusgeliehen == False:
-        print("Es ist keine Scooter ausgeliehen!")
+def scooterZurueckgeben():
+    if ausgeliehene_scooter:
+        # Hier wird immer auf das Letze Element der Liste zugegriffen, müsst man noch eleganter  lösen (z.B. indem der Nutzer die ID seines Scooters eingibt)
+        selected_scooter = ausgeliehene_scooter[-1]
+    else:
+        print("Kein Scooter wurde ausgeliehen.")
         return
     
-    rueckgabeZeitpunkt = getCurrentTimeStamp()
+    selected_scooter.rueckgabe_zeitpunkt = getCurrentTimeStamp()
 
-    scooterAusgeliehen = False
+    selected_scooter.scooter_ausgeliehen = False
 
     print("\n\n")
     print("- Scooter Zurueckgeben -")
     print("\n")
 
-    print(f"Scooter zurueckgeben am: {rueckgabeZeitpunkt[0]}:{rueckgabeZeitpunkt[1]} Uhr")
+    print(f"Scooter zurueckgeben am: {selected_scooter.rueckgabe_zeitpunkt[0]}:{selected_scooter.rueckgabe_zeitpunkt[1]} Uhr")
 
-    timeDifference = getTimeDifferance(ausleihZeitpunkt, rueckgabeZeitpunkt)
+    timeDifference = getTimeDifferance(selected_scooter.ausleih_zeitpunkt, selected_scooter.rueckgabe_zeitpunkt)
     hours = timeDifference[0]
     minutes = timeDifference[1]
     seconds = getCurrentTimeStamp()[2]
@@ -122,22 +139,67 @@ def scooterZurueckgeben():
     print(f"Preis dieser Fahrt: {price}€")
 
 def scooterReservieren():
-    global scooterReserviert, reservierungsZeitpunkt
-    scooterReserviert = True
+    for scooter in scooter_list:
+        if not scooter.scooter_ausgeliehen and not scooter.scooter_reserviert:
+            selected_scooter = scooter
+            break
+            #print(f"Der erste verfügbare Scooter hat die ID: {scooter.id}")
+        else:
+            print("Kein verfügbarer Scooter gefunden.")
 
     reservierungsZeitpunktHour = input("Reservierungszeitpunkt (HH): ")
     reservierungsZeitpunktMinute = input("Reservierungszeitpunkt (MM): ")
-    
-    reservierungsZeitpunkt = [int(reservierungsZeitpunktHour), int(reservierungsZeitpunktMinute)]
 
-    if scooterReserviert == True:
-        print("Du hast erfolgreich einen Scooter reserviert!")
+    if reservierungsZeitraumpruefen(int(reservierungsZeitpunktHour), int(reservierungsZeitpunktMinute)):
+        selected_scooter.reservierungs_zeitpunkt = [int(reservierungsZeitpunktHour), int(reservierungsZeitpunktMinute)]
+        selected_scooter.scooter_reserviert = True
+
+    else:
+        while reservierungsZeitraumpruefen(int(reservierungsZeitpunktHour), int(reservierungsZeitpunktMinute)) == False:
+            print("Deine Reservierung liegt zu weit in der Zukunft")
+            print("Du kannst maximal eine halbe Stunde in der Zukunft reservieren")
+            print("Bitte gib einen gültigen Wert an")
+
+            reservierungsZeitpunktHour = input("Reservierungszeitpunkt (HH): ")
+            reservierungsZeitpunktMinute = input("Reservierungszeitpunkt (MM): ")
+
+    if selected_scooter.scooter_reserviert == True:
+        print(f"Du hast erfolgreich den Scooter {selected_scooter.id} reserviert!")
+        ausgeliehene_scooter.append(selected_scooter)
 
 def uebersichtScooter():
+    if ausgeliehene_scooter:
+        for scooter in ausgeliehene_scooter:
+            if scooter.scooter_reserviert:
+                # Hier wird immer auf das Letze Element der Liste zugegriffen, müsst man noch eleganter  lösen (z.B. indem der Nutzer die ID seines Scooters eingibt)
+                selected_scooter = ausgeliehene_scooter[-1]
     
-    if scooterReserviert == True:
-        print("Du hast einen Scooter reserviert")
-        print("Deine Reservierung beginnt um:", reservierungsZeitpunkt[0], ":", reservierungsZeitpunkt[1])
-        return
+    try:
+        if selected_scooter.scooter_reserviert == True:
+            print("Es ist eine Reservierung vohanden")
+            print(f"Der Scooter {selected_scooter.id} ist für dich reserviert")
+            print("Deine Reservierung beginnt um:", selected_scooter.reservierungs_zeitpunkt[0], ":", selected_scooter.reservierungs_zeitpunkt[1])
+            return
+    except UnboundLocalError as e:
+        print("Du hast keinen Scooter reserviert")
+        return False
+
+def hasReservierung():
+    if ausgeliehene_scooter:
+        for scooter in ausgeliehene_scooter:
+            if scooter.scooter_reserviert:
+                return True
     
-    print("Du hast keinen Scooter reserviert")
+    return False
+
+def reservierungsZeitraumpruefen(reservierungsZeitpunktHour, reservierungsZeitpunktMinute):
+
+    reservierung = datetime.now().replace(hour=reservierungsZeitpunktHour, minute=reservierungsZeitpunktMinute, second=0, microsecond=0)
+
+    time_difference = reservierung - datetime.now() 
+    max_difference = timedelta(minutes=30)
+
+    if time_difference <= max_difference:
+        return True
+    else:
+        return False

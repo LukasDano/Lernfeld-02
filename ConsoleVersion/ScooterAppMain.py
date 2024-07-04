@@ -1,9 +1,6 @@
 import ScooterRentalApp
-import ScooterClass
 
 app = ScooterRentalApp
-
-scooter01 = ScooterClass.Scooter()
 
 optionZero = list(("0", "beenden", "exit"))
 optionOne = list(("1", "ausleihen"))
@@ -12,16 +9,20 @@ optionThree = list(("3", "zurueckgeben", "zurückgeben"))
 optionFour = list(("4", "reservieren"))
 optionFive = list(("5", "uebersicht"))
 
+
+
+# Die eingetliche Anwendung =>
 print("Digitale Scooter App")
 print("\n \n \n")
+
 
 while True:
 
     if __name__ == "__main__":
 
-        if app.reservierungsZeitpunkt != [0,0]:
-            print("- Reminder -")
-            print(f"Du hast einen Scooter für {app.reservierungsZeitpunkt[0]}:{app.reservierungsZeitpunkt[1]} Uhr reserviert")
+        if app.hasReservierung():
+            print("- Reminder - \n")
+            app.uebersichtScooter()
 
         print("<--------------------------------------->")
         print("Optionen: \n")
@@ -38,23 +39,16 @@ while True:
 
         if auszufuehrendeMehtode in optionZero:
             break
-
-        if auszufuehrendeMehtode in optionOne:
+        elif auszufuehrendeMehtode in optionOne:
             app.scooterAusleihen()
-        
-        if auszufuehrendeMehtode in optionTwo:
+        elif auszufuehrendeMehtode in optionTwo:
             app.datenZurAktuellenFahrt()
-        
-        if auszufuehrendeMehtode in optionThree:
+        elif auszufuehrendeMehtode in optionThree:
             app.scooterZurueckgeben()
-        
-        if auszufuehrendeMehtode in optionFour:
+        elif auszufuehrendeMehtode in optionFour:
             app.scooterReservieren()
-        
-        if auszufuehrendeMehtode in optionFive:
+        elif auszufuehrendeMehtode in optionFive:
             app.uebersichtScooter()
-
-print(scooter01.get_scooterAusgeliehen())  # Ausgabe: False
-
-scooter01.set_scooterAusgeliehen(True)
-print(scooter01.get_scooterAusgeliehen())  # Ausgabe: True
+        else:
+            print("Falsche Eingabe")
+            print("Bitte wähle ein der angebenen Optionen")
