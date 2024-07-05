@@ -1,7 +1,7 @@
 from datetime import *
-import Scooter
+import ScooterClass
 
-scooter = Scooter.Scooter
+scooter = ScooterClass.Scooter
 
 GEBUEHR = 1
 PRICE_PER_MINUTE = 0.10
