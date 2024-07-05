@@ -1,11 +1,11 @@
 class Scooter:
 
-
     def __init__(self, id):
         self.id = id
         self.ausleih_zeitpunkt = []
         self.rueckgabe_zeitpunkt = []
         self.reservierungs_zeitpunkt = []
+        
         self.scooter_ausgeliehen = False
         self.scooter_reserviert = False
 
