@@ -14,6 +14,12 @@ for i in range(10):
     scooter_for_list = scooter(i + 1)
     scooter_list.append(scooter_for_list)
 
+def getScooterById(id):
+    for scooter in scooter_list:
+        if scooter.getId() == id:
+            return scooter
+    print("Keinen Scooter mit dieser Id gefunden.")
+
 def getCurrentTimeStamp():
     now = datetime.now()
     hours = int(now.strftime("%H"))
@@ -43,6 +49,7 @@ def scooterAusleihen():
             selected_scooter = scooter
             selected_scooter.setScooterReserviert(False)
             ausgeliehene_scooter.remove(selected_scooter)
+            print("Reservierter Scooter erfolgreich ausgeliehen.")
             break
         elif not scooter.getScooterAusgeliehen():
             selected_scooter = scooter
@@ -73,15 +80,18 @@ def scooterAusleihen():
     
 
 def datenZurAktuellenFahrt():
-    if ausgeliehene_scooter:
-        # Hier wird immer auf das Letze Element der Liste zugegriffen, müsst man noch eleganter  lösen (z.B. indem der Nutzer die ID seines Scooters eingibt)
-        selected_scooter = ausgeliehene_scooter[-1]
+    for scooter in ausgeliehene_scooter:
+        print("\n\n")
+        print("- Daten zu deinen aktuell ausgeliehenen Scooteren -")
+        datenZurAktuellenFahrtByScooterId(scooter.getId())
     else:
         print("Kein Scooter wurde ausgeliehen.")
         return
-    
-    print("\n\n")
-    print("- Die Daten zu deiner aktuellen Fahrt -")
+
+def datenZurAktuellenFahrtByScooterId(id):
+    selected_scooter = getScooterById(id)
+  
+    print(f"- Daten zu Scooter '{id}' -")
     print("\n")
 
     fruehererZeitpunkt = selected_scooter.getAusleihZeitpunkt()
@@ -105,15 +115,30 @@ def datenZurAktuellenFahrt():
     print(f"Du fährst aktuell mit dem Scooter {selected_scooter.getId()}")
 
 def scooterZurueckgeben():
-    if ausgeliehene_scooter:
-        # Hier wird immer auf das Letze Element der Liste zugegriffen, müsst man noch eleganter  lösen (z.B. indem der Nutzer die ID seines Scooters eingibt)
-        selected_scooter = ausgeliehene_scooter[-1]
-    else:
+    if len(ausgeliehene_scooter) == 0 or not ausgeliehene_scooter:
         print("Kein Scooter wurde ausgeliehen.")
+    
+    print("\nDu hast aktuell die Folgenden Scooter ausgeliehen:")
+    #for scooter in ausgeliehene_scooter:
+    #    print(scooter.getId())
+
+    print(", ".join(str(scooter.getId()) for scooter in ausgeliehene_scooter))
+
+    print("Welcher Scooter soll zurückgegeben werden?")
+    returnedScooterId = input("(Als Zahl angeben oder 'all' um alle zurückzugeben): ")
+    if returnedScooterId == "all":
+        for scooter in ausgeliehene_scooter:
+            scooterZurueckgebenById(scooter.getId())
         return
+    scooterZurueckgebenById(int(returnedScooterId))
+
+
+def scooterZurueckgebenById(id):
+    selected_scooter = getScooterById(id)
     
     selected_scooter.setRueckgabeZeitpunkt(getCurrentTimeStamp())
     selected_scooter.setScooterAusgeliehen(False)
+    ausgeliehene_scooter.remove(selected_scooter)
 
     print("\n\n")
     print("- Scooter Zurueckgeben -")

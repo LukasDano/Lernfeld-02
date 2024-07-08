@@ -20,10 +20,11 @@ while True:
 
     if __name__ == "__main__":
 
-        if app.hasReservierung():
+        if app.hasReservierung() and auszufuehrendeMehtode not in optionFive:
             print("- Reminder - \n")
             app.uebersichtScooter()
 
+        print("\n")
         print("<--------------------------------------->")
         print("Optionen: \n")
         print("0. Beenden")
