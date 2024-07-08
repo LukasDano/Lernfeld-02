@@ -1,11 +1,13 @@
-import ScooterClass
+import ConsoleVersion.ScooterClass
+
+scooterClass = ConsoleVersion.ScooterClass
 
 green = "#ff0000: Works"
 red = "#00ff00: Fails"
 
 def test_scooter_class_with_list():
 
-    scooter = ScooterClass.Scooter
+    scooter = scooterClass.Scooter
     scooter_list = []
 
     for i in range(10):
@@ -33,7 +35,7 @@ def test_scooter_class_with_list():
 
 def test_scooter_status_und_id_methodes():
     
-    scooter = ScooterClass.Scooter(1)
+    scooter = scooterClass.Scooter(1)
 
     if scooter.getScooterAusgeliehen() == False:
         print(green)
@@ -67,7 +69,7 @@ def test_scooter_status_und_id_methodes():
 #Klaus Tests
 def test_all_scooter_class_methods():
 
-    scooter = ScooterClass.Scooter(2)
+    scooter = scooterClass.Scooter(2)
 
     ausleihZeitpunkt=[12,53]
     rueckgabeZeitpunkt=[13, 00]
