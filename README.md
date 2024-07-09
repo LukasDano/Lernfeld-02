@@ -19,6 +19,11 @@ Als Kunde von **ScooTeq** haben sie also keinen Grund sich die App nicht sofort 
 - [Git](https://git-scm.com/download)
 - Eine IDE z.B. [VS Code](https://code.visualstudio.com/) oder [PyCharm](https://www.jetbrains.com/de-de/pycharm/download/?section=windows)
 
+### pip install requierments
+
+- `pip install Pillow`
+- `pip install customtkinter`
+
 ### Tipps
 
 Den Python Interpreter findet man hier "C:\Users\BENUTZER_NAME\AppData\Local\Programs\Python"
