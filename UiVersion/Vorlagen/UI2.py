@@ -103,7 +103,7 @@ for (text, command) in buttons:
     button = tk.Button(options_frame, text=text, command=command)
     button.pack(fill='x', pady=5)
 
+# set the size of the window (breite x hoehe )
+root.geometry("650x400")
 # Run the application
 root.mainloop()
-
-
