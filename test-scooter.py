@@ -1,10 +1,12 @@
 import unittest
 from datetime import datetime
-import ScooterClass
+import ConsoleVersion.ScooterClass
+
+scooterClass = ConsoleVersion.ScooterClass
 
 class TestScooter(unittest.TestCase):
     def setUp(self):
-        self.scooter = ScooterClass.Scooter(1)
+        self.scooter = scooterClass.Scooter(1)
 
     def test_getId(self):
         self.assertEqual(self.scooter.getId(), 1)
