@@ -10,3 +10,9 @@ zweiter Button Pausiern
 Weiter Anmerkungen
 Deine Entfernung zum Scooter (danach sortieren) beim reservieren und ausleihen (wird zufällig zwischen 2500 und 10 meter generiert)
 Reservieren ist günstiger als ausleihen (0,05 €)
+
+
+Einfache Aufgaben ohne große GUI Berührungspunkte:
+    sortierung nach Standort (je gerinnger, desto weiter entfernt)
+    Refacotring von reservieren (automatische 20 Minuten reservierung)
+    Refacotring uebersichtScooter (erstmal gucken was da überhaupt geändert werden muss)
