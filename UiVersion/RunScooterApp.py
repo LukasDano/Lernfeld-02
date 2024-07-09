@@ -32,18 +32,22 @@ class frontPage:
 
 frontPage.root.mainloop()
 
-class secondPage:
-    root = ctk.CTk()
-    root.title("ScooTeq App")
-    root.iconbitmap("scooTecIcon.ico")
-    root.geometry("500x350")
 
-    def update_time():
-        exampleTimeField.configure(text=app.getCurrentTimeStamp())
-        root.after(1000, update_time)
+class SecondPage:
+    def __init__(self):
+        self.root = ctk.CTk()
+        self.root.title("ScooTeq App")
+        self.root.iconbitmap("scooTecIcon.ico")
+        self.root.geometry("500x350")
 
-    exampleTimeField = ctk.CTkLabel(master=root, text="", font=("Calibri", 23))
-    update_time()
-    exampleTimeField.pack(pady=20)
+        self.exampleTimeField = ctk.CTkLabel(master=self.root, text="", font=("Calibri", 23))
+        self.exampleTimeField.pack(pady=20)
 
-secondPage.root.mainloop()
+        self.update_time()
+
+    def update_time(self):
+        current_time = app.getCurrentTimeStamp()
+        self.exampleTimeField.configure(text=current_time)
+        self.root.after(1000, self.update_time)
+
+SecondPage().root.mainloop()
