@@ -1,4 +1,4 @@
-import ConsoleVersion.ScooterClass
+import ConsoleVersion.ScooterClass 
 
 scooterClass = ConsoleVersion.ScooterClass
 
