@@ -66,12 +66,13 @@ def update_rentTime(updatingLabel):
 
 def getColorForState(id):
     scooter = app.getScooterById(id)
-    if scooter.getScooterAusgeliehen() == False:
-        return "green"
-    elif scooter.getScooterAusgeliehen() == True:
+    
+    if scooter.getScooterAusgeliehen() == True:
         return "red"
     elif scooter.getScooterReserviert() == True:
         return "orange"
+    elif scooter.getScooterAusgeliehen() == False:
+        return "green"
 
 # Ui - Funktionen
 def scooterAusleihenUi(id):
