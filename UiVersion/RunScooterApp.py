@@ -64,6 +64,15 @@ def update_rentTime(updatingLabel):
     updatingLabel.configure(text=displayedTimeText)
     updatingLabel.after(1000, update_rentTime, updatingLabel)
 
+def getColorForState(id):
+    scooter = app.getScooterById(id)
+    if scooter.getScooterAusgeliehen() == False:
+        return "green"
+    elif scooter.getScooterAusgeliehen() == True:
+        return "red"
+    elif scooter.getScooterReserviert() == True:
+        return "orange"
+
 # Ui - Funktionen
 def scooterAusleihenUi(id):
     global ausleihZeitpunkt 
@@ -155,39 +164,43 @@ def create_avalibleScooterReservieren():
 
     left_frame = ctk.CTkFrame(create_avalibleScooterReservieren)
     left_frame.grid(row=0, column=0, sticky='nsew', pady=20, padx=20)
+    
+    statusColorFirstHalf = [getColorForState(1), getColorForState(2), getColorForState(3), getColorForState(4), getColorForState(5)]
 
-    scooter1Button = ctk.CTkButton(left_frame, text="Scooter 1", fg_color="green", command=lambda: show_frame(scooterReservierungsUebersicht))
+    scooter1Button = ctk.CTkButton(left_frame, text="Scooter 1", fg_color=statusColorFirstHalf[0], command=lambda: show_frame(scooterReservierungsUebersicht))
     scooter1Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter2Button = ctk.CTkButton(left_frame, text="Scooter 2", fg_color="green", command=lambda: show_frame(scooterReservierungsUebersicht))
+    scooter2Button = ctk.CTkButton(left_frame, text="Scooter 2", fg_color=statusColorFirstHalf[1], command=lambda: show_frame(scooterReservierungsUebersicht))
     scooter2Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter3Button = ctk.CTkButton(left_frame, text="Scooter 3", fg_color="green", command=lambda: show_frame(scooterReservierungsUebersicht))
+    scooter3Button = ctk.CTkButton(left_frame, text="Scooter 3", fg_color=statusColorFirstHalf[2], command=lambda: show_frame(scooterReservierungsUebersicht))
     scooter3Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter4Button = ctk.CTkButton(left_frame, text="Scooter 4", fg_color="green", command=lambda: show_frame(scooterReservierungsUebersicht))
+    scooter4Button = ctk.CTkButton(left_frame, text="Scooter 4", fg_color=statusColorFirstHalf[3], command=lambda: show_frame(scooterReservierungsUebersicht))
     scooter4Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter5Button = ctk.CTkButton(left_frame, text="Scooter 5", fg_color="green", command=lambda: show_frame(scooterReservierungsUebersicht))
+    scooter5Button = ctk.CTkButton(left_frame, text="Scooter 5", fg_color=statusColorFirstHalf[4], command=lambda: show_frame(scooterReservierungsUebersicht))
     scooter5Button.pack(side="top", anchor="w", pady=10, padx=10)
 
     right_frame = ctk.CTkFrame(create_avalibleScooterReservieren)
     right_frame.grid(row=0, column=1, sticky='nsew', pady=20, padx=20)
 
-    scooter6Button = ctk.CTkButton(right_frame, text="Scooter 6", fg_color="green", command=lambda: show_frame(scooterReservierungsUebersicht))
+    statusColorSecondHalf = [getColorForState(6), getColorForState(7), getColorForState(8), getColorForState(9), getColorForState(10)]
+
+    scooter6Button = ctk.CTkButton(right_frame, text="Scooter 6", fg_color=statusColorSecondHalf[0], command=lambda: show_frame(scooterReservierungsUebersicht))
     scooter6Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter7Button = ctk.CTkButton(right_frame, text="Scooter 7", fg_color="green", command=lambda: show_frame(scooterReservierungsUebersicht))
+    scooter7Button = ctk.CTkButton(right_frame, text="Scooter 7", fg_color=statusColorSecondHalf[1], command=lambda: show_frame(scooterReservierungsUebersicht))
     scooter7Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter8Button = ctk.CTkButton(right_frame, text="Scooter 8", fg_color="green", command=lambda: show_frame(scooterReservierungsUebersicht))
+    scooter8Button = ctk.CTkButton(right_frame, text="Scooter 8", fg_color=statusColorSecondHalf[2], command=lambda: show_frame(scooterReservierungsUebersicht))
     scooter8Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter9Button = ctk.CTkButton(right_frame, text="Scooter 9", fg_color="green", command=lambda: show_frame(scooterReservierungsUebersicht))
+    scooter9Button = ctk.CTkButton(right_frame, text="Scooter 9", fg_color=statusColorSecondHalf[3], command=lambda: show_frame(scooterReservierungsUebersicht))
     scooter9Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    roterButton = ctk.CTkButton(right_frame, text="Scooter 404", fg_color="red", command=popupNachricht)
-    roterButton.pack(side="top", anchor="w", pady=10, padx=10)
+    scooter9Button = ctk.CTkButton(right_frame, text="Scooter 10", fg_color=statusColorSecondHalf[4], command=lambda: show_frame(scooterReservierungsUebersicht))
+    scooter9Button.pack(side="top", anchor="w", pady=10, padx=10)
 
     back_button_frame = ctk.CTkFrame(create_avalibleScooterReservieren)
     back_button_frame.grid(row=1, column=0, columnspan=2)
@@ -203,37 +216,41 @@ def create_avalibleScooter():
     left_frame = ctk.CTkFrame(avalibleScooter)
     left_frame.grid(row=0, column=0, sticky='nsew', pady=20, padx=20)
 
-    scooter1Button = ctk.CTkButton(left_frame, text="Scooter 1", fg_color="green", command = lambda: scooterAusleihenUi(1))
+    statusColorFirstHalf = [getColorForState(1), getColorForState(2), getColorForState(3), getColorForState(4), getColorForState(5)]
+
+    scooter1Button = ctk.CTkButton(left_frame, text="Scooter 1", fg_color=statusColorFirstHalf[0], command = lambda: scooterAusleihenUi(1))
     scooter1Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter2Button = ctk.CTkButton(left_frame, text="Scooter 2", fg_color="green", command = lambda: scooterAusleihenUi(2))
+    scooter2Button = ctk.CTkButton(left_frame, text="Scooter 2", fg_color=statusColorFirstHalf[1], command = lambda: scooterAusleihenUi(2))
     scooter2Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter3Button = ctk.CTkButton(left_frame, text="Scooter 3", fg_color="green", command = lambda: scooterAusleihenUi(3))
+    scooter3Button = ctk.CTkButton(left_frame, text="Scooter 3", fg_color=statusColorFirstHalf[2], command = lambda: scooterAusleihenUi(3))
     scooter3Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter4Button = ctk.CTkButton(left_frame, text="Scooter 4", fg_color="green", command = lambda: scooterAusleihenUi(4))
+    scooter4Button = ctk.CTkButton(left_frame, text="Scooter 4", fg_color=statusColorFirstHalf[3], command = lambda: scooterAusleihenUi(4))
     scooter4Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter5Button = ctk.CTkButton(left_frame, text="Scooter 5", fg_color="green", command = lambda: scooterAusleihenUi(5))
+    scooter5Button = ctk.CTkButton(left_frame, text="Scooter 5", fg_color=statusColorFirstHalf[4], command = lambda: scooterAusleihenUi(5))
     scooter5Button.pack(side="top", anchor="w", pady=10, padx=10)
 
     right_frame = ctk.CTkFrame(avalibleScooter)
     right_frame.grid(row=0, column=1, sticky='nsew', pady=20, padx=20)
 
-    scooter6Button = ctk.CTkButton(right_frame, text="Scooter 6", fg_color="green", command = lambda: scooterAusleihenUi(6))
+    statusColorSecondHalf = [getColorForState(6), getColorForState(7), getColorForState(8), getColorForState(9), getColorForState(10)]
+
+    scooter6Button = ctk.CTkButton(right_frame, text="Scooter 6", fg_color=statusColorSecondHalf[0], command = lambda: scooterAusleihenUi(6))
     scooter6Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter7Button = ctk.CTkButton(right_frame, text="Scooter 7", fg_color="green", command = lambda: scooterAusleihenUi(7))
+    scooter7Button = ctk.CTkButton(right_frame, text="Scooter 7", fg_color=statusColorSecondHalf[1], command = lambda: scooterAusleihenUi(7))
     scooter7Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter8Button = ctk.CTkButton(right_frame, text="Scooter 8", fg_color="green", command = lambda: scooterAusleihenUi(8))
+    scooter8Button = ctk.CTkButton(right_frame, text="Scooter 8", fg_color=statusColorSecondHalf[2], command = lambda: scooterAusleihenUi(8))
     scooter8Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter9Button = ctk.CTkButton(right_frame, text="Scooter 9", fg_color="green", command = lambda: scooterAusleihenUi(9))
+    scooter9Button = ctk.CTkButton(right_frame, text="Scooter 9", fg_color=statusColorSecondHalf[3], command = lambda: scooterAusleihenUi(9))
     scooter9Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter10Button = ctk.CTkButton(right_frame, text="Scooter 10", fg_color="green", command = lambda: scooterAusleihenUi(10))
+    scooter10Button = ctk.CTkButton(right_frame, text="Scooter 10", fg_color=statusColorSecondHalf[4], command = lambda: scooterAusleihenUi(10))
     scooter10Button.pack(side="top", anchor="w", pady=10, padx=10)
 
     back_button_frame = ctk.CTkFrame(avalibleScooter)
@@ -248,6 +265,9 @@ def popupNachricht():
 
 
 def show_frame(frame):
+    create_avalibleScooter()
+    #create_avalibleScooterReservieren()
+
     frame.tkraise()
 
 def runApp():
