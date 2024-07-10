@@ -24,10 +24,6 @@ def getUhrzeit():
 
     return [hours, minutes, seconds]
 
-# Golbale Variablen
-ausleihZeitpunkt = [0,0,0]
-spaetererZeitpunkt = getUhrzeit()
-currentPrice = 0
 
 # Windows
 frontPage = None
