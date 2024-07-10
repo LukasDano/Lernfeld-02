@@ -9,7 +9,7 @@ import ScooterRentalAppUi
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
 
-app = ScooterRentalAppUi
+app = ScooterRentalAppUi.ScooterRentalApp()
 
 root = ctk.CTk()
 root.title("ScooTeq App")
@@ -38,8 +38,9 @@ root.grid_rowconfigure(0, weight=1)
 root.grid_columnconfigure(0, weight=1)
 
 def update_price(updatingLabel):
+    currentScooter = app.getScooterById(app.bearbeiteterScooterId)
 
-    timeDifference = app.getTimeDifferance(ausleihZeitpunkt, getUhrzeit())
+    timeDifference = app.getTimeDifferance(currentScooter.getAusleihZeitpunkt(), getUhrzeit())
     hours = timeDifference[0]
     minutes = timeDifference[1]
     seconds = getUhrzeit()[2]
@@ -49,12 +50,15 @@ def update_price(updatingLabel):
         timeInMinutes += 1
 
     currentPrice = app.getPrice(timeInMinutes)
+    currentScooter.setAktuellerPreis(currentPrice)
 
     updatingLabel.configure(text=f"Preis: {currentPrice}€")
     updatingLabel.after(1000, update_price, updatingLabel)
 
 def update_rentTime(updatingLabel):
-    time_difference = app.getTimeDifferance(ausleihZeitpunkt, getUhrzeit())
+    currentScooter = app.getScooterById(app.bearbeiteterScooterId)
+
+    time_difference = app.getTimeDifferance(currentScooter.getAusleihZeitpunkt(), getUhrzeit())
 
     hours_str = f"{time_difference[0]:02}"
     minutes_str = f"{time_difference[1]:02}"
@@ -65,10 +69,10 @@ def update_rentTime(updatingLabel):
     updatingLabel.after(1000, update_rentTime, updatingLabel)
 
 # Ui - Funktionen
-def scooterAusleihenUi():
+def scooterAusleihenUi(id):
     global ausleihZeitpunkt 
     ausleihZeitpunkt = getUhrzeit()
-    app.scooterAusleihen
+    app.scooterAusleihen(id)
     show_frame(scooterFahrtUebersicht)
 
 def create_frontPage():
@@ -203,38 +207,38 @@ def create_avalibleScooter():
     left_frame = ctk.CTkFrame(avalibleScooter)
     left_frame.grid(row=0, column=0, sticky='nsew', pady=20, padx=20)
 
-    scooter1Button = ctk.CTkButton(left_frame, text="Scooter 1", fg_color="green", command = scooterAusleihenUi)
+    scooter1Button = ctk.CTkButton(left_frame, text="Scooter 1", fg_color="green", command = lambda: scooterAusleihenUi(1))
     scooter1Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter2Button = ctk.CTkButton(left_frame, text="Scooter 2", fg_color="green", command = scooterAusleihenUi)
+    scooter2Button = ctk.CTkButton(left_frame, text="Scooter 2", fg_color="green", command = lambda: scooterAusleihenUi(2))
     scooter2Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter3Button = ctk.CTkButton(left_frame, text="Scooter 3", fg_color="green", command = scooterAusleihenUi)
+    scooter3Button = ctk.CTkButton(left_frame, text="Scooter 3", fg_color="green", command = lambda: scooterAusleihenUi(3))
     scooter3Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter4Button = ctk.CTkButton(left_frame, text="Scooter 4", fg_color="green", command = scooterAusleihenUi)
+    scooter4Button = ctk.CTkButton(left_frame, text="Scooter 4", fg_color="green", command = lambda: scooterAusleihenUi(4))
     scooter4Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter5Button = ctk.CTkButton(left_frame, text="Scooter 5", fg_color="green", command = scooterAusleihenUi)
+    scooter5Button = ctk.CTkButton(left_frame, text="Scooter 5", fg_color="green", command = lambda: scooterAusleihenUi(5))
     scooter5Button.pack(side="top", anchor="w", pady=10, padx=10)
 
     right_frame = ctk.CTkFrame(avalibleScooter)
     right_frame.grid(row=0, column=1, sticky='nsew', pady=20, padx=20)
 
-    scooter6Button = ctk.CTkButton(right_frame, text="Scooter 6", fg_color="green", command = scooterAusleihenUi)
+    scooter6Button = ctk.CTkButton(right_frame, text="Scooter 6", fg_color="green", command = lambda: scooterAusleihenUi(6))
     scooter6Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter7Button = ctk.CTkButton(right_frame, text="Scooter 7", fg_color="green", command = scooterAusleihenUi)
+    scooter7Button = ctk.CTkButton(right_frame, text="Scooter 7", fg_color="green", command = lambda: scooterAusleihenUi(7))
     scooter7Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter8Button = ctk.CTkButton(right_frame, text="Scooter 8", fg_color="green", command = scooterAusleihenUi)
+    scooter8Button = ctk.CTkButton(right_frame, text="Scooter 8", fg_color="green", command = lambda: scooterAusleihenUi(8))
     scooter8Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    scooter9Button = ctk.CTkButton(right_frame, text="Scooter 9", fg_color="green", command = scooterAusleihenUi)
+    scooter9Button = ctk.CTkButton(right_frame, text="Scooter 9", fg_color="green", command = lambda: scooterAusleihenUi(9))
     scooter9Button.pack(side="top", anchor="w", pady=10, padx=10)
 
-    roterButton = ctk.CTkButton(right_frame, text="Scooter 404", fg_color="red", command=popupNachricht)
-    roterButton.pack(side="top", anchor="w", pady=10, padx=10)
+    scooter10Button = ctk.CTkButton(right_frame, text="Scooter 10", fg_color="green", command = lambda: scooterAusleihenUi(10))
+    scooter10Button.pack(side="top", anchor="w", pady=10, padx=10)
 
     back_button_frame = ctk.CTkFrame(avalibleScooter)
     back_button_frame.grid(row=1, column=0, columnspan=2)
@@ -258,5 +262,4 @@ def runApp():
     show_frame(frontPage)
     root.mainloop()
 
-while True:
-    runApp()
+runApp()

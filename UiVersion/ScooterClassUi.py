@@ -3,9 +3,9 @@ class Scooter:
         self.id = id
         self.standort = standort
 
-        self.ausleihZeitpunkt = []
-        self.rueckgabeZeitpunkt = []
-        self.reservierungsZeitpunkt = []
+        self.ausleihZeitpunkt = [0,0,0]
+        self.rueckgabeZeitpunkt = [0,0,0]
+        self.reservierungsZeitpunkt = [0,0,0]
 
         self.scooterAusgeliehen = False
         self.scooterReserviert = False
