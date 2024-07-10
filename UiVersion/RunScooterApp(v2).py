@@ -55,7 +55,7 @@ def create_frontPage():
     logo_label.image = logo_image
     logo_label.grid(row=0, column=0, pady=10, padx=10) 
 
-    label = ctk.CTkLabel(upper_frame, text="Willkommen bei der SccTeq GmbH!", font=("Helvetica", 15, "bold"))
+    label = ctk.CTkLabel(upper_frame, text="Willkommen bei der ScooTeq GmbH!", font=("Helvetica", 15, "bold"))
     label.grid(row=0, column=1, pady=12, padx=10)
 
     down_frame = ctk.CTkFrame(frontPage)
@@ -64,17 +64,17 @@ def create_frontPage():
     label = ctk.CTkLabel(down_frame, text="Wähle eine Option:", font=("Helvetica", 15, "bold"))
     label.grid(row=0, column=0 , pady=12, padx=10)
 
-    ausleihen_button = ctk.CTkButton(down_frame, text="ausleihen", command=app.scooterAusleihen)
+    ausleihen_button = ctk.CTkButton(down_frame, text="ausleihen", command=lambda: show_frame(avalibleScooter))
     ausleihen_button.grid(row=0, column=1, pady=12, padx=18)
     
-    reservieren_button = ctk.CTkButton(down_frame, text="reservieren", command=app.scooterReservieren)
+    reservieren_button = ctk.CTkButton(down_frame, text="reservieren", command=lambda: show_frame(create_avalibleScooterReservieren))
     reservieren_button.grid(row=1, column=1, pady=12, padx=18)
 
     #switch_button1 = ctk.CTkButton(down_frame, text="Go to Frame 2", command=lambda: show_frame(scooterUebersicht))
     #switch_button1.grid(row=2, column=1, pady=12) 
 
-    switch_button2 = ctk.CTkButton(down_frame, text="Scooter auswählen", command=lambda: show_frame(avalibleScooter))
-    switch_button2.grid(row=2, column=1, pady=12)
+    #switch_button2 = ctk.CTkButton(down_frame, text="Scooter auswählen", command=lambda: show_frame(avalibleScooter))
+    #switch_button2.grid(row=2, column=1, pady=12)
     
     beenden_button  = ctk.CTkButton(down_frame, text="Beenden", command=root.destroy)
     beenden_button.grid(row=3, column=1, pady=12, padx=18)
@@ -100,6 +100,71 @@ def create_scooterUebersicht():
     switch_button2 = ctk.CTkButton(scooterUebersicht, text="Go to Frame 1", command=lambda: show_frame(frontPage))
     switch_button2.pack(pady=20)
 
+def create_scooterUebersicht():
+    global scooterUebersicht
+    scooterUebersicht = ctk.CTkFrame(root)
+    scooterUebersicht.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
+    
+    dauerAusleihenField = ctk.CTkLabel(scooterUebersicht, text="", font=("Calibri", 23))
+    dauerAusleihenField.pack(pady=20)
+
+    update_field(dauerAusleihenField)
+
+    exampleTimeField = ctk.CTkLabel(scooterUebersicht, text="", font=("Calibri", 23))
+    exampleTimeField.pack(pady=20)
+
+    update_time(exampleTimeField)
+
+    switch_button2 = ctk.CTkButton(scooterUebersicht, text="Go to Frame 1", command=lambda: show_frame(frontPage))
+    switch_button2.pack(pady=20)
+
+def create_avalibleScooterReservieren():
+    global create_avalibleScooterReservieren
+    create_avalibleScooterReservieren = ctk.CTkFrame(root)
+    create_avalibleScooterReservieren.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
+
+    left_frame = ctk.CTkFrame(create_avalibleScooterReservieren)
+    left_frame.grid(row=0, column=0, sticky='nsew', pady=20, padx=20)
+
+    scooter1Button = ctk.CTkButton(left_frame, text="Scooter 1", fg_color="green", command=lambda: show_frame(scooter1Uebersicht))
+    scooter1Button.pack(side="top", anchor="w", pady=10, padx=10)
+
+    scooter2Button = ctk.CTkButton(left_frame, text="Scooter 2", fg_color="green", command=lambda: show_frame(scooter1Uebersicht))
+    scooter2Button.pack(side="top", anchor="w", pady=10, padx=10)
+
+    scooter3Button = ctk.CTkButton(left_frame, text="Scooter 3", fg_color="green", command=lambda: show_frame(scooter1Uebersicht))
+    scooter3Button.pack(side="top", anchor="w", pady=10, padx=10)
+
+    scooter4Button = ctk.CTkButton(left_frame, text="Scooter 4", fg_color="green", command=lambda: show_frame(scooter1Uebersicht))
+    scooter4Button.pack(side="top", anchor="w", pady=10, padx=10)
+
+    scooter5Button = ctk.CTkButton(left_frame, text="Scooter 5", fg_color="green", command=lambda: show_frame(scooter1Uebersicht))
+    scooter5Button.pack(side="top", anchor="w", pady=10, padx=10)
+
+    right_frame = ctk.CTkFrame(create_avalibleScooterReservieren)
+    right_frame.grid(row=0, column=1, sticky='nsew', pady=20, padx=20)
+
+    scooter6Button = ctk.CTkButton(right_frame, text="Scooter 6", fg_color="green", command=lambda: show_frame(scooter1Uebersicht))
+    scooter6Button.pack(side="top", anchor="w", pady=10, padx=10)
+
+    scooter7Button = ctk.CTkButton(right_frame, text="Scooter 7", fg_color="green", command=lambda: show_frame(scooter1Uebersicht))
+    scooter7Button.pack(side="top", anchor="w", pady=10, padx=10)
+
+    scooter8Button = ctk.CTkButton(right_frame, text="Scooter 8", fg_color="green", command=lambda: show_frame(scooter1Uebersicht))
+    scooter8Button.pack(side="top", anchor="w", pady=10, padx=10)
+
+    scooter9Button = ctk.CTkButton(right_frame, text="Scooter 9", fg_color="green", command=lambda: show_frame(scooter1Uebersicht))
+    scooter9Button.pack(side="top", anchor="w", pady=10, padx=10)
+
+    roterButton = ctk.CTkButton(right_frame, text="Scooter 404", fg_color="red", command=popupNachricht)
+    roterButton.pack(side="top", anchor="w", pady=10, padx=10)
+
+    back_button_frame = ctk.CTkFrame(create_avalibleScooterReservieren)
+    back_button_frame.grid(row=1, column=0, columnspan=2)
+
+    switch_button2 = ctk.CTkButton(back_button_frame, text="Zurück", command=lambda: show_frame(frontPage))
+    switch_button2.pack(pady=10)
+
 def create_avalibleScooter():
     global avalibleScooter
     avalibleScooter = ctk.CTkFrame(root)
@@ -108,7 +173,7 @@ def create_avalibleScooter():
     left_frame = ctk.CTkFrame(avalibleScooter)
     left_frame.grid(row=0, column=0, sticky='nsew', pady=20, padx=20)
 
-    scooter1Button = ctk.CTkButton(left_frame, text="Scooter 1", fg_color="green", command=lambda: show_frame(scooter1Uebersicht))
+    scooter1Button = ctk.CTkButton(left_frame, text="Scooter 1", fg_color="green", command=lambda: show_frame(scooterUebersicht))
     scooter1Button.pack(side="top", anchor="w", pady=10, padx=10)
 
     scooter2Button = ctk.CTkButton(left_frame, text="Scooter 2", fg_color="green", command=lambda: show_frame(scooterUebersicht))
@@ -158,7 +223,7 @@ def create_scooter1Uebersicht():
     exampleTimeField = ctk.CTkLabel(scooter1Uebersicht, text="", font=("Calibri", 23))
     exampleTimeField.pack(pady=20)
     update_time(exampleTimeField)
-    zurueckButton = ctk.CTkButton(scooter1Uebersicht, text="Zurück", command=lambda: show_frame(avalibleScooter))
+    zurueckButton = ctk.CTkButton(scooter1Uebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
     zurueckButton.pack(pady=20)
 
 
@@ -171,6 +236,7 @@ def runApp():
     create_scooterUebersicht()
     create_avalibleScooter()
     create_scooter1Uebersicht()
+    create_avalibleScooterReservieren()
     show_frame(frontPage)
     root.mainloop()
 
