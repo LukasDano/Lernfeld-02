@@ -44,37 +44,43 @@ def create_frontPage():
     frontPage = ctk.CTkFrame(master=root)
     frontPage.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
 
-   # upper_frame = ctk.CTkFrame(frontPage)
-   # upper_frame.grid(row=0, column=0, sticky='nsew', pady=20, padx=20)
-
-   # down_frame = ctk.CTkFrame(frontPage)
-   # down_frame.grid(row=1, column=0, sticky='nsew', pady=20, padx=20)
-
-    label = ctk.CTkLabel(frontPage, text="Was möchtest du machen?", font=("Helvetica", 15, "bold"))
-    label.pack(pady=12, padx=10)
-
-    ausleihen_button = ctk.CTkButton(frontPage, text="ausleihen", command=app.scooterAusleihen)
-    ausleihen_button.pack(pady=12, padx=18)
-    
-    reservieren_button = ctk.CTkButton(frontPage, text="reservieren", command=app.scooterReservieren)
-    reservieren_button.pack(pady=12, padx=18)
-    
-    reservieren_button = ctk.CTkButton(frontPage, text="Beenden", command=root.destroy)
-    reservieren_button.pack(pady=12, padx=18)
-
-    switch_button1 = ctk.CTkButton(frontPage, text="Go to Frame 2", command=lambda: show_frame(scooterUebersicht))
-    switch_button1.pack(pady=12)
-
-    switch_button2 = ctk.CTkButton(frontPage, text="Scooter auswählen", command=lambda: show_frame(avalibleScooter))
-    switch_button2.pack(pady=12)
+    upper_frame = ctk.CTkFrame(frontPage)
+    upper_frame.grid(row=0, column=0, sticky='nsew', pady=5, padx=35)
 
     logo_image = Image.open("ScooTec3.png")  
     logo_image = logo_image.resize((70, 70), Image.LANCZOS)  
     logo_image = ImageTk.PhotoImage(logo_image)
     
-    logo_label = tk.Label(frontPage, image=logo_image)
+    logo_label = tk.Label(upper_frame, image=logo_image)
     logo_label.image = logo_image
-    logo_label.place(x=10, y=50)
+    logo_label.grid(row=0, column=0, pady=10, padx=10) 
+
+    label = ctk.CTkLabel(upper_frame, text="Willkommen bei der SccTeq GmbH!", font=("Helvetica", 15, "bold"))
+    label.grid(row=0, column=1, pady=12, padx=10)
+
+    down_frame = ctk.CTkFrame(frontPage)
+    down_frame.grid(row=1, column=0, sticky='nsew', pady=5, padx=5)
+
+    label = ctk.CTkLabel(down_frame, text="Wähle eine Option:", font=("Helvetica", 15, "bold"))
+    label.grid(row=0, column=0 , pady=12, padx=10)
+
+    ausleihen_button = ctk.CTkButton(down_frame, text="ausleihen", command=app.scooterAusleihen)
+    ausleihen_button.grid(row=0, column=1, pady=12, padx=18)
+    
+    reservieren_button = ctk.CTkButton(down_frame, text="reservieren", command=app.scooterReservieren)
+    reservieren_button.grid(row=1, column=1, pady=12, padx=18)
+
+    #switch_button1 = ctk.CTkButton(down_frame, text="Go to Frame 2", command=lambda: show_frame(scooterUebersicht))
+    #switch_button1.grid(row=2, column=1, pady=12) 
+
+    switch_button2 = ctk.CTkButton(down_frame, text="Scooter auswählen", command=lambda: show_frame(avalibleScooter))
+    switch_button2.grid(row=2, column=1, pady=12)
+    
+    beenden_button  = ctk.CTkButton(down_frame, text="Beenden", command=root.destroy)
+    beenden_button.grid(row=3, column=1, pady=12, padx=18)
+
+   
+
 
 def create_scooterUebersicht():
     global scooterUebersicht
