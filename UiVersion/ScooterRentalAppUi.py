@@ -1,6 +1,7 @@
 import random
 import datetime
 from datetime import *
+
 import ScooterClassUi
 
 scooter = ScooterClassUi.Scooter
@@ -38,14 +39,27 @@ def getCurrentTimeStamp():
 
 def getTimeDifferance(fruehererZeitpunkt, spaetererZeitpunkt):
 
-    differenz = [0,0,0]
+    # Erstellen von datetime-Objekten für die früheren und späteren Zeitpunkte
+    frueher = datetime(2020, 1, 1, fruehererZeitpunkt[0], fruehererZeitpunkt[1], fruehererZeitpunkt[2])
+    spaeter = datetime(2020, 1, 1, spaetererZeitpunkt[0], spaetererZeitpunkt[1], spaetererZeitpunkt[2])
+    
+    # Berechnen der Zeitdifferenz
+    differenz = spaeter - frueher
+    
+    # Extrahieren der Stunden, Minuten und Sekunden
+    differenz_in_secs = differenz.total_seconds()
+    hours = int(differenz_in_secs // 3600)
+    minutes = int((differenz_in_secs % 3600) // 60)
+    seconds = int(differenz_in_secs % 60)
 
-    differenz[0] = spaetererZeitpunkt[0] - fruehererZeitpunkt[0]
-    differenz[1] = spaetererZeitpunkt[1] - fruehererZeitpunkt[1]
-    differenz[2] = spaetererZeitpunkt[2] - fruehererZeitpunkt[2]
-
-    #print("Differenz:", differenz)
-    return differenz
+    if hours <= 9:
+        hours = "0" + str(hours)
+    if minutes <= 9:
+        minutes = "0" + str(minutes)
+    if seconds <= 9:
+        seconds = "0" + str(seconds)
+    
+    return [int(hours), int(minutes), int(seconds)]
 
 def getPrice(timeInMinutes):
     price = timeInMinutes * PRICE_PER_MINUTE_DRIVE + GEBUEHR

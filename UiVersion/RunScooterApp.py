@@ -15,6 +15,19 @@ root.title("ScooTeq App")
 root.iconbitmap("UiVersion/scooTecIcon.ico")
 root.geometry("500x350")
 
+def getUhrzeit():
+    now = datetime.now()
+    hours = int(now.strftime("%H"))
+    minutes = int(now.strftime("%M"))
+    seconds = int(now.strftime("%S"))
+
+    return [hours, minutes, seconds]
+
+# Golbale Variablen
+ausleihZeitpunkt = [0,0,0]
+spaetererZeitpunkt = getUhrzeit()
+currentPrice = 0
+
 # Windows
 frontPage = None
 scooterUebersicht = None
@@ -22,21 +35,38 @@ scooterUebersicht = None
 root.grid_rowconfigure(0, weight=1)
 root.grid_columnconfigure(0, weight=1)
 
-def update_time(updatingLabel):
-    updatingLabel.configure(text=app.getCurrentTimeStamp())
-    updatingLabel.after(1000, update_time, updatingLabel)
+def update_price(updatingLabel):
 
+    timeDifference = app.getTimeDifferance(ausleihZeitpunkt, getUhrzeit())
+    hours = timeDifference[0]
+    minutes = timeDifference[1]
+    seconds = getUhrzeit()[2]
 
-#fruehererZeitpunkt = selected_scooter.getAusleihZeitpunkt()
-fruehererZeitpunkt = [8,30,0]
-spaetererZeitpunkt = app.getCurrentTimeStamp()
+    timeInMinutes = hours * 60 + minutes
+    if seconds != 0:
+        timeInMinutes += 1
 
-def update_field(updatingLabel):
-    global fruehererZeitpunkt
-    spaetererZeitpunkt = app.getCurrentTimeStamp()
-    time_difference = app.getTimeDifferance(fruehererZeitpunkt, spaetererZeitpunkt)
-    updatingLabel.configure(text=time_difference)
-    updatingLabel.after(1000, update_field, updatingLabel)
+    currentPrice = app.getPrice(timeInMinutes)
+
+    updatingLabel.configure(text=f"Preis: {currentPrice}€")
+    updatingLabel.after(1000, update_price, updatingLabel)
+
+def update_rentTime(updatingLabel):
+    time_difference = app.getTimeDifferance(ausleihZeitpunkt, getUhrzeit())
+
+    hours_str = f"{time_difference[0]:02}"
+    minutes_str = f"{time_difference[1]:02}"
+    seconds_str = f"{time_difference[2]:02}"
+
+    displayedTimeText = f"Dauer aktuelle Fahrt: {hours_str}:{minutes_str}:{seconds_str} h"
+    updatingLabel.configure(text=displayedTimeText)
+    updatingLabel.after(1000, update_rentTime, updatingLabel)
+
+def scooterAusleihenUi():
+    global ausleihZeitpunkt 
+    ausleihZeitpunkt = getUhrzeit()
+    app.scooterAusleihen
+
 
 def create_frontPage():
     global frontPage
@@ -46,7 +76,7 @@ def create_frontPage():
     label = ctk.CTkLabel(frontPage, text="Was möchtest du machen?", font=("Helvetica", 15, "bold"))
     label.pack(pady=12, padx=10)
 
-    ausleihen_button = ctk.CTkButton(frontPage, text="ausleihen", command=app.scooterAusleihen)
+    ausleihen_button = ctk.CTkButton(frontPage, text="ausleihen", command=scooterAusleihenUi)
     ausleihen_button.pack(pady=12, padx=18)
     
     reservieren_button = ctk.CTkButton(frontPage, text="reservieren", command=app.scooterReservieren)
@@ -66,12 +96,12 @@ def create_scooterUebersicht():
     dauerAusleihenField = ctk.CTkLabel(scooterUebersicht, text="", font=("Calibri", 23))
     dauerAusleihenField.pack(pady=20)
 
-    update_field(dauerAusleihenField)
+    update_rentTime(dauerAusleihenField)
 
     exampleTimeField = ctk.CTkLabel(scooterUebersicht, text="", font=("Calibri", 23))
     exampleTimeField.pack(pady=20)
 
-    update_time(exampleTimeField)
+    update_price(exampleTimeField)
 
     switch_button2 = ctk.CTkButton(scooterUebersicht, text="Go to Frame 1", command=lambda: show_frame(frontPage))
     switch_button2.pack(pady=20)
