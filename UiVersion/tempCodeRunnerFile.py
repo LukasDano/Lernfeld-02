@@ -23,20 +23,9 @@ root.grid_rowconfigure(0, weight=1)
 root.grid_columnconfigure(0, weight=1)
 
 def update_time(updatingLabel):
-    updatingLabel.configure(text=app.getCurrentTimeStamp())
+    current_time = app.getCurrentTimeStamp()
+    updatingLabel.configure(text=current_time)
     updatingLabel.after(1000, update_time, updatingLabel)
-
-
-#fruehererZeitpunkt = selected_scooter.getAusleihZeitpunkt()
-fruehererZeitpunkt = [8,30,0]
-spaetererZeitpunkt = app.getCurrentTimeStamp()
-
-def update_field(updatingLabel):
-    global fruehererZeitpunkt
-    spaetererZeitpunkt = app.getCurrentTimeStamp()
-    time_difference = app.getTimeDifferance(fruehererZeitpunkt, spaetererZeitpunkt)
-    updatingLabel.configure(text=time_difference)
-    updatingLabel.after(1000, update_field, updatingLabel)
 
 def create_frontPage():
     global frontPage
@@ -63,11 +52,6 @@ def create_scooterUebersicht():
     scooterUebersicht = ctk.CTkFrame(root)
     scooterUebersicht.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
     
-    dauerAusleihenField = ctk.CTkLabel(scooterUebersicht, text="", font=("Calibri", 23))
-    dauerAusleihenField.pack(pady=20)
-
-    update_field(dauerAusleihenField)
-
     exampleTimeField = ctk.CTkLabel(scooterUebersicht, text="", font=("Calibri", 23))
     exampleTimeField.pack(pady=20)
 

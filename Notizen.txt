@@ -16,3 +16,9 @@ Einfache Aufgaben ohne große GUI Berührungspunkte:
     sortierung nach Standort (je gerinnger, desto weiter entfernt)
     Refacotring von reservieren (automatische 20 Minuten reservierung)
     Refacotring uebersichtScooter (erstmal gucken was da überhaupt geändert werden muss)
+
+Aufgaben mit GUI:
+    Willkommenseite (Willkommen bei ScooTec) -> nur kurzer text und dann auf die ausleih/reservieren seite mit knopfdruck
+    Ausleih- und Reservierungsfenster
+    Main Scooterübersicht Fenster (ist glaube ich am schonsten) -> Pausierungsansicht
+    Methoden so refactorn, dass sie zu der Oberfläche passen
