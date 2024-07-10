@@ -38,10 +38,11 @@ def getCurrentTimeStamp():
 
 def getTimeDifferance(fruehererZeitpunkt, spaetererZeitpunkt):
 
-    differenz = [0, 0]
+    differenz = [0,0,0]
 
     differenz[0] = spaetererZeitpunkt[0] - fruehererZeitpunkt[0]
     differenz[1] = spaetererZeitpunkt[1] - fruehererZeitpunkt[1]
+    differenz[2] = spaetererZeitpunkt[2] - fruehererZeitpunkt[2]
 
     #print("Differenz:", differenz)
     return differenz
