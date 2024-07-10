@@ -53,20 +53,6 @@ class ScooterRentalApp:
         seconds = int(differenz_in_secs % 60)
         
         return [hours, minutes, seconds]
-    
-    @staticmethod
-    def getCountDownToAusleihen(fruehererZeitpunkt, spaetererZeitpunkt):
-
-        frueher = datetime(2020, 1, 1, fruehererZeitpunkt[0], fruehererZeitpunkt[1], fruehererZeitpunkt[2])
-        spaeter = datetime(2020, 1, 1, spaetererZeitpunkt[0], spaetererZeitpunkt[1], spaetererZeitpunkt[2])
-        
-        differenz = spaeter - frueher
-        differenz_in_secs = differenz.total_seconds()
-        hours = int(differenz_in_secs // 3600)
-        minutes = int((differenz_in_secs % 3600) // 60)
-        seconds = int(differenz_in_secs % 60)
-        
-        return [hours, minutes, seconds]
 
     @staticmethod
     def getPrice(timeInMinutes):
@@ -150,6 +136,8 @@ class ScooterRentalApp:
 
             if selected_scooter.getScooterReserviert():
                 self.ausgeliehene_scooter.append(selected_scooter)
+
+        self.bearbeiteterScooterId = id
 
     def uebersichtScooter(self):
         if self.ausgeliehene_scooter:

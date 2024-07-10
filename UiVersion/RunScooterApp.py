@@ -67,7 +67,7 @@ def update_rentTime(updatingLabel):
 def update_reserveTime(updatingLabel):
     currentScooter = app.getScooterById(app.bearbeiteterScooterId)
 
-    time_difference = app.getCountDownToAusleihen(getUhrzeit(), currentScooter.getReservierungsZeitpunkt())
+    time_difference = app.getTimeDifferance(getUhrzeit(), currentScooter.getReservierungsZeitpunkt())
 
     hours_str = f"{time_difference[0]:02}"
     minutes_str = f"{time_difference[1]:02}"
@@ -176,6 +176,7 @@ def create_scooterReservierungsUebersicht():
 
     update_reserveTime(dauerReservierungField)
 
+    # TODO Preis macht noch keinen Sinn, muss angepasst werden
     priceRentField = ctk.CTkLabel(scooterReservierungsUebersicht, text="", font=("Calibri", 18))
     priceRentField.pack(pady=1)
 
@@ -292,12 +293,11 @@ def popupNachricht():
 
 
 def show_frame(frame):
-    create_avalibleScooter()
-    create_avalibleScooterReservieren()
+    update_frames()
 
     frame.tkraise()
 
-def runApp():
+def update_frames():
     create_frontPage()
 
     create_scooterFahrtUebersicht()
@@ -306,7 +306,14 @@ def runApp():
     create_avalibleScooter()
     create_avalibleScooterReservieren()
 
+def runApp():
+    update_frames()
+
     show_frame(frontPage)
     root.mainloop()
 
 runApp()
+
+
+# TODO BearbeitungsId ersetzen/verbessern
+# TODO Preis bei der Reservierung richtig darstellen
