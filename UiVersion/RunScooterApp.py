@@ -98,7 +98,7 @@ def scooterAusleihenUi(id):
 
 def scooterZurueckgebenByIdUi(id):
     app.scooterZurueckgebenById(id)
-    show_frame(frontPage)
+    show_frame(scooterFahrtUebersichtRueckgabe)
 
 
 def scooterReservierenUi(id):
@@ -145,6 +145,23 @@ def create_frontPage():
 
     beenden_button  = ctk.CTkButton(down_frame, text="App beenden", command=root.destroy)
     beenden_button.grid(row=3, column=1, pady=12, padx=18)
+
+
+def create_scooterFahrtUebersichtRueckgabe():
+    global scooterFahrtUebersichtRueckgabe
+    scooterFahrtUebersichtRueckgabe = ctk.CTkFrame(root)
+    scooterFahrtUebersichtRueckgabe.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
+
+    headline = f"Du fährst aktuell mit Scooter: {app.bearbeiteterScooterId}"
+    rentedScooterField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=headline, font=("Calibri", 23))
+    rentedScooterField.pack(pady=20)
+
+    dauerAusleihenField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text="", font=("Calibri", 18))
+    dauerAusleihenField.pack(pady=1)
+
+    priceDriveField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text="", font=("Calibri", 18))
+    priceDriveField.pack(pady=1)
+
 
 
 def create_scooterFahrtUebersicht():
@@ -309,7 +326,7 @@ def update_frames():
 
     create_scooterFahrtUebersicht()
     create_scooterReservierungsUebersicht()
-
+    create_scooterFahrtUebersichtRueckgabe()
     create_avalibleScooter()
     create_avalibleScooterReservieren()
 
