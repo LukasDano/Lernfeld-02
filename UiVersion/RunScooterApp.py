@@ -115,18 +115,35 @@ def getColorForState(id):
 def scooterAusleihenUi(id):
     global selectedScooter
     selectedScooter = id
-
-    app.scooterAusleihen(id)
     update_frames()
+    
+    if(app.getScooterById(id).getScooterAusgeliehen()):
+        show_frame(scooterFahrtUebersicht)
+        return
+    app.scooterAusleihen(id)
     show_frame(scooterFahrtUebersicht)
+
+def scooterZurueckgebenByIdUi(id):
+    app.scooterZurueckgebenById(id)
+    show_frame(frontPage)
+
 
 def scooterReservierenUi(id):
     global selectedScooter
     selectedScooter = id
-
-    app.scooterReservieren(id)
     update_frames()
+
+    if(app.getScooterById(id).getScooterReserviert()):
+        show_frame(scooterReservierungsUebersicht)
+        return 
+      
+    app.scooterReservieren(id)
     show_frame(scooterReservierungsUebersicht)
+
+def scooterReservierenBeendenUi(id):
+    app.scooterReservierenBeenden(id)
+    show_frame(frontPage)
+   
 
 def create_frontPage():
     global frontPage
@@ -152,19 +169,13 @@ def create_frontPage():
     label = ctk.CTkLabel(down_frame, text="Wähle eine Option:", font=("Helvetica", 15, "bold"))
     label.grid(row=0, column=0 , pady=12, padx=10)
 
-    ausleihen_button = ctk.CTkButton(down_frame, text="Ausleihen", command=lambda: show_frame(avalibleScooter))
+    ausleihen_button = ctk.CTkButton(down_frame, text="Scooter ausleihen", command=lambda: show_frame(avalibleScooter))
     ausleihen_button.grid(row=0, column=1, pady=12, padx=18)
 
-    reservieren_button = ctk.CTkButton(down_frame, text="Reservieren", command = lambda: show_frame(avalibleScooterReservieren))
+    reservieren_button = ctk.CTkButton(down_frame, text="Scooter reservieren", command = lambda: show_frame(avalibleScooterReservieren))
     reservieren_button.grid(row=1, column=1, pady=12, padx=18)
 
-    #switch_button1 = ctk.CTkButton(down_frame, text="Go to Frame 2", command=lambda: show_frame(scooterUebersicht))
-    #switch_button1.grid(row=2, column=1, pady=12) 
-
-    #switch_button2 = ctk.CTkButton(down_frame, text="Scooter auswählen", command=lambda: show_frame(avalibleScooter))
-    #switch_button2.grid(row=2, column=1, pady=12)
-
-    beenden_button  = ctk.CTkButton(down_frame, text="Beenden", command=root.destroy)
+    beenden_button  = ctk.CTkButton(down_frame, text="App beenden", command=root.destroy)
     beenden_button.grid(row=3, column=1, pady=12, padx=18)
 
 
@@ -185,10 +196,11 @@ def create_scooterFahrtUebersicht():
     priceDriveField = ctk.CTkLabel(scooterFahrtUebersicht, text="", font=("Calibri", 18))
     priceDriveField.pack(pady=1)
 
-    update_drivePice(priceDriveField)
-
-    switch_button2 = ctk.CTkButton(scooterFahrtUebersicht, text="Home", command=lambda: show_frame(frontPage))
-    switch_button2.pack(pady=20)
+    update_price(priceDriveField)
+    switch_button1 = ctk.CTkButton(scooterFahrtUebersicht, text="Ausleihen beenden.", command=lambda: scooterZurueckgebenByIdUi(app.bearbeiteterScooterId))
+    switch_button1.pack(pady=10)
+    switch_button2 = ctk.CTkButton(scooterFahrtUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
+    switch_button2.pack(pady=10)
 
 def create_scooterReservierungsUebersicht():
     global scooterReservierungsUebersicht
@@ -208,10 +220,13 @@ def create_scooterReservierungsUebersicht():
     priceRentField.pack(pady=1)
 
     update_rentPrice(priceRentField)
-
-    switch_button2 = ctk.CTkButton(scooterReservierungsUebersicht, text="Home", command=lambda: show_frame(frontPage))
-    switch_button2.pack(pady=20)
-
+    switch_button0 = ctk.CTkButton(scooterReservierungsUebersicht, text="Scooter jetzt ausleihen.", command=lambda: scooterAusleihenUi(app.bearbeiteterScooterId))
+    switch_button0.pack(pady=10)
+    switch_button1 = ctk.CTkButton(scooterReservierungsUebersicht, text="Reservieren beenden.", command=lambda: scooterReservierenBeendenUi(app.bearbeiteterScooterId))
+    switch_button1.pack(pady=10)
+    switch_button2 = ctk.CTkButton(scooterReservierungsUebersicht, text="Zur Startseite", command=lambda: show_frame(frontPage))
+    switch_button2.pack(pady=10)
+    
 def create_avalibleScooterReservieren():
     global avalibleScooterReservieren
     avalibleScooterReservieren = ctk.CTkFrame(root)
@@ -272,7 +287,7 @@ def create_avalibleScooter():
     left_frame.grid(row=0, column=0, sticky='nsew', pady=20, padx=20)
 
     statusColorFirstHalf = [getColorForState(1), getColorForState(2), getColorForState(3), getColorForState(4), getColorForState(5)]
-
+    
     scooter1Button = ctk.CTkButton(left_frame, text="Scooter 1", fg_color=statusColorFirstHalf[0], command = lambda: scooterAusleihenUi(1))
     scooter1Button.pack(side="top", anchor="w", pady=10, padx=10)
 
@@ -313,10 +328,6 @@ def create_avalibleScooter():
 
     switch_button2 = ctk.CTkButton(back_button_frame, text="Zurück", command=lambda: show_frame(frontPage))
     switch_button2.pack(pady=10)
-
-def popupNachricht():
-    messagebox.showinfo("Scooter nicht verfügbar", "Scooter nicht verfügbar, bitte einen grünen Scooter auswählen")    
-
 
 
 def show_frame(frame):

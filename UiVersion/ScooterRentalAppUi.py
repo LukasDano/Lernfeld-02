@@ -144,6 +144,11 @@ class ScooterRentalApp:
 
         self.bearbeiteterScooterId = id
 
+    def scooterReservierenBeenden(self, id):
+        selected_scooter = self.getScooterById(id)
+        selected_scooter.setScooterReserviert(False)
+
+        
     def uebersichtScooter(self):
         if self.ausgeliehene_scooter:
             selected_scooter = None
