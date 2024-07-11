@@ -173,7 +173,7 @@ def create_scooterReservierungsUebersicht():
     priceRentField.pack(pady=1)
 
     update_price(priceRentField)
-    switch_button0 = ctk.CTkButton(scooterReservierungsUebersicht, text="Scooter jetzt ausleihen.", command=lambda: show_frame(scooterFahrtUebersicht))
+    switch_button0 = ctk.CTkButton(scooterReservierungsUebersicht, text="Scooter jetzt ausleihen.", command=lambda: scooterAusleihenUi(app.bearbeiteterScooterId))
     switch_button0.pack(pady=10)
     switch_button1 = ctk.CTkButton(scooterReservierungsUebersicht, text="Reservieren beenden.")
     switch_button1.pack(pady=10)
