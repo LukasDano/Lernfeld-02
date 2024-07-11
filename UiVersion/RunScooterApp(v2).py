@@ -23,7 +23,7 @@ def getUhrzeit():
 
     return [hours, minutes, seconds]
 
-
+  
 # Windows
 frontPage = None
 scooterFahrtUebersicht = None
