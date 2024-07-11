@@ -55,14 +55,20 @@ class ScooterRentalApp:
         return [hours, minutes, seconds]
 
     @staticmethod
-    def getPrice(timeInMinutes):
+    def getDrivePrice(timeInMinutes):
         price = timeInMinutes * ScooterRentalApp.PRICE_PER_MINUTE_DRIVE + ScooterRentalApp.GEBUEHR
+        formattedPrice = "{:.2f}".format(price)
+        return formattedPrice
+    
+    @staticmethod
+    def getRentPrice(timeInMinutes):
+        price = timeInMinutes * ScooterRentalApp.PRICE_PER_MINUTE_RESERVE + ScooterRentalApp.GEBUEHR
+
         formattedPrice = "{:.2f}".format(price)
         return formattedPrice
 
     def scooterAusleihen(self, id):
 
-        # TODO: Schon ausgeliehen oder reserviert handling
         selected_scooter = self.getScooterById(id)
         
         if selected_scooter:
@@ -114,12 +120,11 @@ class ScooterRentalApp:
             timeInMinutes = int(hours) * 60 + int(minutes)
             if seconds != 0:
                 timeInMinutes += 1
-            price = self.getPrice(timeInMinutes)
+            price = self.getDrivePrice(timeInMinutes)
             print(f"Preis dieser Fahrt: {price}€")
 
     def scooterReservieren(self, id):
 
-        # TODO handling schon ausgeliehen oder reserviert
         selected_scooter = self.getScooterById(id)
 
         current_time = datetime.now()
