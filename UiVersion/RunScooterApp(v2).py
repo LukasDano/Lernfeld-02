@@ -22,7 +22,6 @@ def getUhrzeit():
     seconds = int(now.strftime("%S"))
 
     return [hours, minutes, seconds]
-
   
 # Windows
 frontPage = None
@@ -81,7 +80,7 @@ def update_reserveTime(updatingLabel):
 
 def getColorForState(id):
     scooter = app.getScooterById(id)
-    
+
     if scooter.getScooterAusgeliehen() == True:
         return "red"
     elif scooter.getScooterReserviert() == True:
@@ -109,7 +108,7 @@ def create_frontPage():
     logo_image = Image.open("UiVersion/scooTecLogo.png")  
     logo_image = logo_image.resize((70, 70), Image.LANCZOS)  
     logo_image = ImageTk.PhotoImage(logo_image)
-    
+
     logo_label = tk.Label(upper_frame, image=logo_image)
     logo_label.image = logo_image
     logo_label.grid(row=0, column=0, pady=10, padx=10) 
@@ -119,13 +118,12 @@ def create_frontPage():
 
     down_frame = ctk.CTkFrame(frontPage)
     down_frame.grid(row=1, column=0, sticky='nsew', pady=5, padx=5)
-
     label = ctk.CTkLabel(down_frame, text="Wähle eine Option:", font=("Helvetica", 15, "bold"))
     label.grid(row=0, column=0 , pady=12, padx=10)
 
     ausleihen_button = ctk.CTkButton(down_frame, text="Ausleihen", command=lambda: show_frame(avalibleScooter))
     ausleihen_button.grid(row=0, column=1, pady=12, padx=18)
-    
+
     reservieren_button = ctk.CTkButton(down_frame, text="Reservieren", command = lambda: show_frame(avalibleScooterReservieren))
     reservieren_button.grid(row=1, column=1, pady=12, padx=18)
 
@@ -134,7 +132,7 @@ def create_frontPage():
 
     #switch_button2 = ctk.CTkButton(down_frame, text="Scooter auswählen", command=lambda: show_frame(avalibleScooter))
     #switch_button2.grid(row=2, column=1, pady=12)
-    
+
     beenden_button  = ctk.CTkButton(down_frame, text="Beenden", command=root.destroy)
     beenden_button.grid(row=3, column=1, pady=12, padx=18)
 
@@ -143,7 +141,7 @@ def create_scooterFahrtUebersicht():
     global scooterFahrtUebersicht
     scooterFahrtUebersicht = ctk.CTkFrame(root)
     scooterFahrtUebersicht.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
-    
+
     headline = f"Du fährst aktuell mit Scooter: {app.bearbeiteterScooterId}"
     rentedScooterField = ctk.CTkLabel(scooterFahrtUebersicht, text=headline, font=("Calibri", 23))
     rentedScooterField.pack(pady=20)
@@ -165,7 +163,7 @@ def create_scooterReservierungsUebersicht():
     global scooterReservierungsUebersicht
     scooterReservierungsUebersicht = ctk.CTkFrame(root)
     scooterReservierungsUebersicht.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
-    
+
     headline = f"Du hast erfolgreich Scooter: {app.bearbeiteterScooterId} reserviert"
     reservedScooterField = ctk.CTkLabel(scooterReservierungsUebersicht, text=headline, font=("Calibri", 23))
     reservedScooterField.pack(pady=20)
@@ -183,7 +181,6 @@ def create_scooterReservierungsUebersicht():
 
     switch_button2 = ctk.CTkButton(scooterReservierungsUebersicht, text="Home", command=lambda: show_frame(frontPage))
     switch_button2.pack(pady=20)
-
 def create_avalibleScooterReservieren():
     global avalibleScooterReservieren
     avalibleScooterReservieren = ctk.CTkFrame(root)
@@ -191,7 +188,7 @@ def create_avalibleScooterReservieren():
 
     left_frame = ctk.CTkFrame(avalibleScooterReservieren)
     left_frame.grid(row=0, column=0, sticky='nsew', pady=20, padx=20)
-    
+
     statusColorFirstHalf = [getColorForState(1), getColorForState(2), getColorForState(3), getColorForState(4), getColorForState(5)]
 
     scooter1Button = ctk.CTkButton(left_frame, text="Scooter 1", fg_color=statusColorFirstHalf[0], command = lambda: scooterReservierenUi(1))
