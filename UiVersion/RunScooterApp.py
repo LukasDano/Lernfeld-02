@@ -47,13 +47,13 @@ def update_drivePice(updatingLabel):
 
     currentPrice = app.getDrivePrice(timeInMinutes)
     currentScooter.updatePreis(currentPrice)
-    print(currentScooter.getAktuellerPreis())
+    #print(currentScooter.getAktuellerPreis())
     #print(currentScooter.getInsgesamterPreis())
 
     updatingLabel.configure(text=f"Aktueller Preis: {currentPrice}€")
     updatingLabel.after(1000, update_drivePice, updatingLabel)
 
-def update_rentTime(updatingLabel):
+def update_driveTime(updatingLabel):
     currentScooter = app.getScooterById(selectedScooter)
 
     time_difference = app.getTimeDifferance(currentScooter.getAusleihZeitpunkt(), getUhrzeit())
@@ -64,7 +64,7 @@ def update_rentTime(updatingLabel):
 
     displayedTimeText = f"Dauer aktuelle Fahrt: {hours_str}:{minutes_str}:{seconds_str} h"
     updatingLabel.configure(text=displayedTimeText)
-    updatingLabel.after(1000, update_rentTime, updatingLabel)
+    updatingLabel.after(1000, update_driveTime, updatingLabel)
 
 def update_reserveTime(updatingLabel):
     currentScooter = app.getScooterById(selectedScooter)
@@ -82,7 +82,7 @@ def update_reserveTime(updatingLabel):
     if time_difference[0] == 0 and time_difference[1] == 0 and time_difference[2] == 0:
         scooterAusleihenUi(currentScooter.getId())
 
-def update_rentPrice(updatingLabel):
+def update_reservePrice(updatingLabel):
     currentScooter = app.getScooterById(selectedScooter)
 
     timeDifference = app.getTimeDifferance(getUhrzeit(), currentScooter.getReservierungsZeitpunkt())
@@ -97,9 +97,10 @@ def update_rentPrice(updatingLabel):
     currentPrice = app.getRentPrice(timeInMinutes)
     currentScooter.updatePreis(currentPrice)
     #print(currentScooter.getAktuellerPreis())
+    #print(currentScooter.getInsgesamterPreis())
 
     updatingLabel.configure(text=f"Preis der Reservierung: {currentPrice}€")
-    updatingLabel.after(1000, update_rentPrice, updatingLabel)
+    updatingLabel.after(1000, update_reservePrice, updatingLabel)
 
 def getColorForState(id):
     scooter = app.getScooterById(id)
@@ -208,13 +209,13 @@ def create_scooterFahrtUebersicht():
     dauerAusleihenField = ctk.CTkLabel(scooterFahrtUebersicht, text="", font=("Calibri", 18))
     dauerAusleihenField.pack(pady=1)
 
-    update_rentTime(dauerAusleihenField)
+    update_driveTime(dauerAusleihenField)
 
     priceDriveField = ctk.CTkLabel(scooterFahrtUebersicht, text="", font=("Calibri", 18))
     priceDriveField.pack(pady=1)
 
-    update_price(priceDriveField)
-    switch_button1 = ctk.CTkButton(scooterFahrtUebersicht, text="Ausleihen beenden.", command=lambda: scooterZurueckgebenByIdUi(app.bearbeiteterScooterId))
+    update_drivePice(priceDriveField)
+    switch_button1 = ctk.CTkButton(scooterFahrtUebersicht, text="Ausleihen beenden", command=lambda: scooterZurueckgebenByIdUi(app.bearbeiteterScooterId))
     switch_button1.pack(pady=10)
     switch_button2 = ctk.CTkButton(scooterFahrtUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
     switch_button2.pack(pady=10)
@@ -236,10 +237,10 @@ def create_scooterReservierungsUebersicht():
     priceRentField = ctk.CTkLabel(scooterReservierungsUebersicht, text="", font=("Calibri", 18))
     priceRentField.pack(pady=1)
 
-    update_rentPrice(priceRentField)
-    switch_button0 = ctk.CTkButton(scooterReservierungsUebersicht, text="Scooter jetzt ausleihen.", command=lambda: scooterAusleihenUi(app.bearbeiteterScooterId))
+    update_reservePrice(priceRentField)
+    switch_button0 = ctk.CTkButton(scooterReservierungsUebersicht, text="Scooter jetzt ausleihen", command=lambda: scooterAusleihenUi(app.bearbeiteterScooterId))
     switch_button0.pack(pady=10)
-    switch_button1 = ctk.CTkButton(scooterReservierungsUebersicht, text="Reservieren beenden.", command=lambda: scooterReservierenBeendenUi(app.bearbeiteterScooterId))
+    switch_button1 = ctk.CTkButton(scooterReservierungsUebersicht, text="Reservieren beenden", command=lambda: scooterReservierenBeendenUi(app.bearbeiteterScooterId))
     switch_button1.pack(pady=10)
     switch_button2 = ctk.CTkButton(scooterReservierungsUebersicht, text="Zur Startseite", command=lambda: show_frame(frontPage))
     switch_button2.pack(pady=10)
