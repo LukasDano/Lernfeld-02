@@ -28,11 +28,13 @@ frontPage = None
 scooterFahrtUebersicht = None
 scooterReservierungsUebersicht = None
 
+selectedScooter = 1
+
 root.grid_rowconfigure(0, weight=1)
 root.grid_columnconfigure(0, weight=1)
 
-def update_price(updatingLabel):
-    currentScooter = app.getScooterById(app.bearbeiteterScooterId)
+def update_drivePice(updatingLabel):
+    currentScooter = app.getScooterById(selectedScooter)
 
     timeDifference = app.getTimeDifferance(currentScooter.getAusleihZeitpunkt(), getUhrzeit())
     hours = timeDifference[0]
@@ -43,14 +45,16 @@ def update_price(updatingLabel):
     if seconds != 0:
         timeInMinutes += 1
 
-    currentPrice = app.getPrice(timeInMinutes)
-    currentScooter.setAktuellerPreis(currentPrice)
+    currentPrice = app.getDrivePrice(timeInMinutes)
+    currentScooter.updatePreis(currentPrice)
+    print(currentScooter.getAktuellerPreis())
+    #print(currentScooter.getInsgesamterPreis())
 
     updatingLabel.configure(text=f"Aktueller Preis: {currentPrice}€")
-    updatingLabel.after(1000, update_price, updatingLabel)
+    updatingLabel.after(1000, update_drivePice, updatingLabel)
 
 def update_rentTime(updatingLabel):
-    currentScooter = app.getScooterById(app.bearbeiteterScooterId)
+    currentScooter = app.getScooterById(selectedScooter)
 
     time_difference = app.getTimeDifferance(currentScooter.getAusleihZeitpunkt(), getUhrzeit())
 
@@ -63,7 +67,7 @@ def update_rentTime(updatingLabel):
     updatingLabel.after(1000, update_rentTime, updatingLabel)
 
 def update_reserveTime(updatingLabel):
-    currentScooter = app.getScooterById(app.bearbeiteterScooterId)
+    currentScooter = app.getScooterById(selectedScooter)
 
     time_difference = app.getTimeDifferance(getUhrzeit(), currentScooter.getReservierungsZeitpunkt())
 
@@ -78,6 +82,25 @@ def update_reserveTime(updatingLabel):
     if time_difference[0] == 0 and time_difference[1] == 0 and time_difference[2] == 0:
         scooterAusleihenUi(currentScooter.getId())
 
+def update_rentPrice(updatingLabel):
+    currentScooter = app.getScooterById(selectedScooter)
+
+    timeDifference = app.getTimeDifferance(getUhrzeit(), currentScooter.getReservierungsZeitpunkt())
+    hours = timeDifference[0]
+    minutes = timeDifference[1]
+    seconds = getUhrzeit()[2]
+
+    timeInMinutes = 19 - minutes
+    if seconds != 0:
+        timeInMinutes += 1
+
+    currentPrice = app.getRentPrice(timeInMinutes)
+    currentScooter.updatePreis(currentPrice)
+    #print(currentScooter.getAktuellerPreis())
+
+    updatingLabel.configure(text=f"Preis der Reservierung: {currentPrice}€")
+    updatingLabel.after(1000, update_rentPrice, updatingLabel)
+
 def getColorForState(id):
     scooter = app.getScooterById(id)
 
@@ -90,11 +113,19 @@ def getColorForState(id):
 
 # Ui - Funktionen
 def scooterAusleihenUi(id):
+    global selectedScooter
+    selectedScooter = id
+
     app.scooterAusleihen(id)
+    update_frames()
     show_frame(scooterFahrtUebersicht)
 
 def scooterReservierenUi(id):
+    global selectedScooter
+    selectedScooter = id
+
     app.scooterReservieren(id)
+    update_frames()
     show_frame(scooterReservierungsUebersicht)
 
 def create_frontPage():
@@ -142,7 +173,7 @@ def create_scooterFahrtUebersicht():
     scooterFahrtUebersicht = ctk.CTkFrame(root)
     scooterFahrtUebersicht.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
 
-    headline = f"Du fährst aktuell mit Scooter: {app.bearbeiteterScooterId}"
+    headline = f"Du fährst aktuell mit Scooter: {selectedScooter}"
     rentedScooterField = ctk.CTkLabel(scooterFahrtUebersicht, text=headline, font=("Calibri", 23))
     rentedScooterField.pack(pady=20)
 
@@ -154,7 +185,7 @@ def create_scooterFahrtUebersicht():
     priceDriveField = ctk.CTkLabel(scooterFahrtUebersicht, text="", font=("Calibri", 18))
     priceDriveField.pack(pady=1)
 
-    update_price(priceDriveField)
+    update_drivePice(priceDriveField)
 
     switch_button2 = ctk.CTkButton(scooterFahrtUebersicht, text="Home", command=lambda: show_frame(frontPage))
     switch_button2.pack(pady=20)
@@ -164,7 +195,7 @@ def create_scooterReservierungsUebersicht():
     scooterReservierungsUebersicht = ctk.CTkFrame(root)
     scooterReservierungsUebersicht.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
 
-    headline = f"Du hast erfolgreich Scooter: {app.bearbeiteterScooterId} reserviert"
+    headline = f"Du hast erfolgreich Scooter: {selectedScooter} reserviert"
     reservedScooterField = ctk.CTkLabel(scooterReservierungsUebersicht, text=headline, font=("Calibri", 23))
     reservedScooterField.pack(pady=20)
 
@@ -173,14 +204,14 @@ def create_scooterReservierungsUebersicht():
 
     update_reserveTime(dauerReservierungField)
 
-    # TODO Preis macht noch keinen Sinn, muss angepasst werden
     priceRentField = ctk.CTkLabel(scooterReservierungsUebersicht, text="", font=("Calibri", 18))
     priceRentField.pack(pady=1)
 
-    update_price(priceRentField)
+    update_rentPrice(priceRentField)
 
     switch_button2 = ctk.CTkButton(scooterReservierungsUebersicht, text="Home", command=lambda: show_frame(frontPage))
     switch_button2.pack(pady=20)
+
 def create_avalibleScooterReservieren():
     global avalibleScooterReservieren
     avalibleScooterReservieren = ctk.CTkFrame(root)
@@ -310,6 +341,11 @@ def runApp():
 
 runApp()
 
+# TODO Zurueckgeben/Quittungsfenster
+# TODO Klassen aufraeumen
 
-# TODO BearbeitungsId ersetzen/verbessern
-# TODO Preis bei der Reservierung richtig darstellen
+# TODO Evtl. Gesamt Preis ordentlich machen
+# TODO Sortierung nach der Entfernung
+
+# TODO Datenbank einhängen
+# TODO LogIn erstellen
