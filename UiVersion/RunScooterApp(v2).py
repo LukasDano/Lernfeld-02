@@ -5,7 +5,6 @@ import tkinter.messagebox as messagebox
 import tkinter as tk
 import ScooterRentalAppUi
 
-# Set appearance mode and color theme
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
 
@@ -23,8 +22,7 @@ def getUhrzeit():
     seconds = int(now.strftime("%S"))
 
     return [hours, minutes, seconds]
-
-
+  
 # Windows
 frontPage = None
 scooterFahrtUebersicht = None
@@ -120,7 +118,6 @@ def create_frontPage():
 
     down_frame = ctk.CTkFrame(frontPage)
     down_frame.grid(row=1, column=0, sticky='nsew', pady=5, padx=5)
-
     label = ctk.CTkLabel(down_frame, text="Wähle eine Option:", font=("Helvetica", 15, "bold"))
     label.grid(row=0, column=0 , pady=12, padx=10)
 
@@ -184,7 +181,6 @@ def create_scooterReservierungsUebersicht():
 
     switch_button2 = ctk.CTkButton(scooterReservierungsUebersicht, text="Home", command=lambda: show_frame(frontPage))
     switch_button2.pack(pady=20)
-
 def create_avalibleScooterReservieren():
     global avalibleScooterReservieren
     avalibleScooterReservieren = ctk.CTkFrame(root)
