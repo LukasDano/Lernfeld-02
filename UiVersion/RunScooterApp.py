@@ -127,12 +127,6 @@ def create_frontPage():
     reservieren_button = ctk.CTkButton(down_frame, text="Reservieren", command = lambda: show_frame(avalibleScooterReservieren))
     reservieren_button.grid(row=1, column=1, pady=12, padx=18)
 
-    #switch_button1 = ctk.CTkButton(down_frame, text="Go to Frame 2", command=lambda: show_frame(scooterUebersicht))
-    #switch_button1.grid(row=2, column=1, pady=12) 
-
-    #switch_button2 = ctk.CTkButton(down_frame, text="Scooter auswählen", command=lambda: show_frame(avalibleScooter))
-    #switch_button2.grid(row=2, column=1, pady=12)
-
     beenden_button  = ctk.CTkButton(down_frame, text="Beenden", command=root.destroy)
     beenden_button.grid(row=3, column=1, pady=12, padx=18)
 
