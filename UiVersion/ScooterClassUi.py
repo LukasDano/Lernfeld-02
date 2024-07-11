@@ -11,6 +11,7 @@ class Scooter:
         self.scooterReserviert = False
 
         self.aktuellerPreis = 0
+        self.insgesamterPreis = 0
 
     def getId(self):
         return self.id
@@ -57,6 +58,15 @@ class Scooter:
 
     def getAktuellerPreis(self):
         return self.aktuellerPreis
-    
+  
     def setAktuellerPreis(self, aktuellerPreis):
+        self.aktuellerPreis = aktuellerPreis
+
+    # TODO: Gesamt Preis fixen
+    def getInsgesamterPreis(self):
+        return self.insgesamterPreis
+
+    def updatePreis(self, aktuellerPreis):
+        differenz = float(aktuellerPreis) - float(self.aktuellerPreis)
+        self.insgesamterPreis += differenz
         self.aktuellerPreis = aktuellerPreis
