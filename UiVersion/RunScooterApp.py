@@ -213,7 +213,7 @@ def create_scooterFahrtUebersichtRueckgabe():
     scooterFahrtUebersichtRueckgabe = ctk.CTkFrame(root)
     scooterFahrtUebersichtRueckgabe.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
 
-    headline = f"Du hast Scooter: {selectedScooter} erfolgreich zurückgegeben"
+    headline = f"Die Rückgabe von Scooter {selectedScooter} war erfolgreich!"
     headlineField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=headline, font=("Calibri", 23))
     headlineField.pack(pady=20)
 
@@ -227,7 +227,19 @@ def create_scooterFahrtUebersichtRueckgabe():
     priceDriveField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=rueckgabePreisText, font=("Calibri", 18))
     priceDriveField.pack(pady=1)
 
-    bestaetigen_button = ctk.CTkButton(scooterFahrtUebersichtRueckgabe, text="Bestätigen", command=lambda: show_frame(frontPage))
+    logo_image = Image.open("UiVersion/scooTecLogo.png")  
+    logo_image = logo_image.resize((70, 70), Image.LANCZOS)  
+    logo_image = ImageTk.PhotoImage(logo_image)
+
+    logo_label = tk.Label(scooterFahrtUebersichtRueckgabe, image=logo_image)
+    logo_label.image = logo_image
+    logo_label.pack(pady=10)
+
+    headline = "Danke für ihre Fahrt mit ScooTec!"
+    headlineField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=headline, font=("Calibri", 23))
+    headlineField.pack(pady=20)
+
+    bestaetigen_button = ctk.CTkButton(scooterFahrtUebersichtRueckgabe, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
     bestaetigen_button.pack(pady=10)
 
 def create_scooterFahrtUebersicht():
@@ -275,7 +287,7 @@ def create_scooterReservierungsUebersicht():
     switch_button0.pack(pady=10)
     switch_button1 = ctk.CTkButton(scooterReservierungsUebersicht, text="Reservieren beenden", command=lambda: scooterReservierenBeendenUi(app.bearbeiteterScooterId))
     switch_button1.pack(pady=10)
-    switch_button2 = ctk.CTkButton(scooterReservierungsUebersicht, text="Zur Startseite", command=lambda: show_frame(frontPage))
+    switch_button2 = ctk.CTkButton(scooterReservierungsUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
     switch_button2.pack(pady=10)
     
 def create_avalibleScooterReservieren():
