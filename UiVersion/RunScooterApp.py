@@ -133,11 +133,13 @@ def scooterAusleihenUi(id):
 def scooterZurueckgebenByIdUi(id):
     global selectedScooter
     selectedScooter = id
+    
     scooter = app.getScooterById(id)
 
     # TODO Preis ordentlich machena
 
-    app.scooterZurueckgebenById(id)
+    app.scooterZurueckgeben(id)
+    update_frames()
     show_frame(scooterFahrtUebersichtRueckgabe)
 
 
@@ -194,20 +196,11 @@ def create_frontPage():
 def getGesamteDauer():
 
     scooter = app.getScooterById(selectedScooter)
-
-    reservierungsZeitpunkt = scooter.getReservierungsZeitpunkt()
-    ausleihZeitpunkt = scooter.getAusleihZeitpunkt()
-
-    if reservierungsZeitpunkt == [0,0,0]:
-        timeDifferance = app.getTimeDifferance(ausleihZeitpunkt, scooter.getRueckgabeZeitpunkt())
-
-        hours_str = f"{timeDifferance[0]:02}"
-        minutes_str = f"{timeDifferance[1]:02}"
-        seconds_str = f"{timeDifferance[2]:02}"
-
-        return f"{hours_str}:{minutes_str}:{seconds_str}"
     
-    timeDifferance = app.getTimeDifferance(reservierungsZeitpunkt, scooter.getRueckgabeZeitpunkt())
+    beginnZeitpunkt = scooter.getBeginnZeitpunkt()
+    rueckgabeZeitpunkt = scooter.getRueckgabeZeitpunkt()
+    
+    timeDifferance = app.getTimeDifferance(beginnZeitpunkt, rueckgabeZeitpunkt)
     
     hours_str = f"{timeDifferance[0]:02}"
     minutes_str = f"{timeDifferance[1]:02}"
@@ -220,16 +213,17 @@ def create_scooterFahrtUebersichtRueckgabe():
     scooterFahrtUebersichtRueckgabe = ctk.CTkFrame(root)
     scooterFahrtUebersichtRueckgabe.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
 
-    headline = f"Du fährst aktuell mit Scooter: {selectedScooter}"
+    headline = f"Du hast Scooter: {selectedScooter} erfolgreich zurückgegeben"
     headlineField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=headline, font=("Calibri", 23))
     headlineField.pack(pady=20)
 
-    rueckgabeZeitText = f"Du hast deinen Scooter insgesammt für {getGesamteDauer()} ausgeliehen"
+    gesamteZeit = getGesamteDauer()
+    rueckgabeZeitText = f"Insgesamt ausgeliehene Zeit: {gesamteZeit}"
     dauerAusleihenField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=rueckgabeZeitText, font=("Calibri", 18))
     dauerAusleihenField.pack(pady=1)
 
     #rueckgabePreisText = f"Deine Fahrt kostet insgesammt {app.getScooterById(selectedScooter).getInsgesamterPreis()}€"
-    rueckgabePreisText = f"Deine Fahrt kostet insgesammt {app.getScooterById(selectedScooter).getAktuellerPreis()}€"
+    rueckgabePreisText = f"Preis dieser Fahrt {app.getScooterById(selectedScooter).getAktuellerPreis()}€"
     priceDriveField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=rueckgabePreisText, font=("Calibri", 18))
     priceDriveField.pack(pady=1)
 

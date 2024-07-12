@@ -6,6 +6,7 @@ class Scooter:
         self.ausleihZeitpunkt = [0,0,0]
         self.rueckgabeZeitpunkt = [0,0,0]
         self.reservierungsZeitpunkt = [0,0,0]
+        self.beginnZeitpunkt = [0,0,0]
 
         self.scooterAusgeliehen = False
         self.scooterReserviert = False
@@ -55,6 +56,12 @@ class Scooter:
     
     def setReservierungsZeitpunkt(self, reservierungsZeitpunkt):
         self.reservierungsZeitpunkt = reservierungsZeitpunkt
+
+    def getBeginnZeitpunkt(self):
+        return self.beginnZeitpunkt
+    
+    def setBeginnZeitpunkt(self, beginnZeitpunkt):
+        self.beginnZeitpunkt = beginnZeitpunkt
 
     def getAktuellerPreis(self):
         return self.aktuellerPreis
