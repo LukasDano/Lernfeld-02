@@ -46,7 +46,8 @@ def update_drivePice(updatingLabel):
         timeInMinutes += 1
 
     currentPrice = app.getDrivePrice(timeInMinutes)
-    currentScooter.updatePreis(currentPrice)
+    #currentScooter.updatePreis(currentPrice)
+    currentScooter.setAktuellerPreis(currentPrice)
     #print(currentScooter.getAktuellerPreis())
     #print(currentScooter.getInsgesamterPreis())
 
@@ -95,7 +96,8 @@ def update_reservePrice(updatingLabel):
         timeInMinutes += 1
 
     currentPrice = app.getRentPrice(timeInMinutes)
-    currentScooter.updatePreis(currentPrice)
+    #currentScooter.updatePreis(currentPrice)
+    currentScooter.setAktuellerPreis(currentPrice)
     #print(currentScooter.getAktuellerPreis())
     #print(currentScooter.getInsgesamterPreis())
 
@@ -116,15 +118,25 @@ def getColorForState(id):
 def scooterAusleihenUi(id):
     global selectedScooter
     selectedScooter = id
+    scooter = app.getScooterById(id)
     update_frames()
-    
-    if(app.getScooterById(id).getScooterAusgeliehen()):
+
+    if scooter.getScooterReserviert():
+       scooter.setInsgesamterPreis(scooter.getAktuellerPreis())
+
+    if scooter.getScooterAusgeliehen():
         show_frame(scooterFahrtUebersicht)
         return
     app.scooterAusleihen(id)
     show_frame(scooterFahrtUebersicht)
 
 def scooterZurueckgebenByIdUi(id):
+    global selectedScooter
+    selectedScooter = id
+    scooter = app.getScooterById(id)
+
+    # TODO Preis ordentlich machena
+
     app.scooterZurueckgebenById(id)
     show_frame(scooterFahrtUebersichtRueckgabe)
 
@@ -179,20 +191,50 @@ def create_frontPage():
     beenden_button  = ctk.CTkButton(down_frame, text="App beenden", command=root.destroy)
     beenden_button.grid(row=3, column=1, pady=12, padx=18)
 
+def getGesamteDauer():
+
+    scooter = app.getScooterById(selectedScooter)
+
+    reservierungsZeitpunkt = scooter.getReservierungsZeitpunkt()
+    ausleihZeitpunkt = scooter.getAusleihZeitpunkt()
+
+    if reservierungsZeitpunkt == [0,0,0]:
+        timeDifferance = app.getTimeDifferance(ausleihZeitpunkt, scooter.getRueckgabeZeitpunkt())
+
+        hours_str = f"{timeDifferance[0]:02}"
+        minutes_str = f"{timeDifferance[1]:02}"
+        seconds_str = f"{timeDifferance[2]:02}"
+
+        return f"{hours_str}:{minutes_str}:{seconds_str}"
+    
+    timeDifferance = app.getTimeDifferance(reservierungsZeitpunkt, scooter.getRueckgabeZeitpunkt())
+    
+    hours_str = f"{timeDifferance[0]:02}"
+    minutes_str = f"{timeDifferance[1]:02}"
+    seconds_str = f"{timeDifferance[2]:02}"
+
+    return f"{hours_str}:{minutes_str}:{seconds_str}"
+
 def create_scooterFahrtUebersichtRueckgabe():
     global scooterFahrtUebersichtRueckgabe
     scooterFahrtUebersichtRueckgabe = ctk.CTkFrame(root)
     scooterFahrtUebersichtRueckgabe.grid(row=0, column=0, sticky='nsew', pady=20, padx=60)
 
     headline = f"Du fährst aktuell mit Scooter: {selectedScooter}"
-    rentedScooterField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=headline, font=("Calibri", 23))
-    rentedScooterField.pack(pady=20)
+    headlineField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=headline, font=("Calibri", 23))
+    headlineField.pack(pady=20)
 
-    dauerAusleihenField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text="", font=("Calibri", 18))
+    rueckgabeZeitText = f"Du hast deinen Scooter insgesammt für {getGesamteDauer()} ausgeliehen"
+    dauerAusleihenField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=rueckgabeZeitText, font=("Calibri", 18))
     dauerAusleihenField.pack(pady=1)
 
-    priceDriveField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text="", font=("Calibri", 18))
+    #rueckgabePreisText = f"Deine Fahrt kostet insgesammt {app.getScooterById(selectedScooter).getInsgesamterPreis()}€"
+    rueckgabePreisText = f"Deine Fahrt kostet insgesammt {app.getScooterById(selectedScooter).getAktuellerPreis()}€"
+    priceDriveField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=rueckgabePreisText, font=("Calibri", 18))
     priceDriveField.pack(pady=1)
+
+    bestaetigen_button = ctk.CTkButton(scooterFahrtUebersichtRueckgabe, text="Bestätigen", command=lambda: show_frame(frontPage))
+    bestaetigen_button.pack(pady=10)
 
 def create_scooterFahrtUebersicht():
     global scooterFahrtUebersicht
@@ -368,9 +410,10 @@ runApp()
 
 # TODO Zurueckgeben/Quittungsfenster
 # TODO Klassen aufraeumen
-
 # TODO Evtl. Gesamt Preis ordentlich machen
-# TODO Sortierung nach der Entfernung
+#   -> Den Preis so machen wie früher und wenn man fertig ist, speichert man den gesamenten Preis fürs reservieren als "gesamtPreis", dann muss man drauf achten die gebühr nur einmal zu berechnen
+#   -> Wenn man den Scooter zurückgibt addiert man den ausleih Preis (ohne gebühr) in den gesamt preis und gibt diesen dann als "Insgesamter Preis" aus.
 
+# TODO Sortierung nach der Entfernung
 # TODO Datenbank einhängen
 # TODO LogIn erstellen

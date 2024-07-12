@@ -65,8 +65,6 @@ class Scooter:
     # TODO: Gesamt Preis fixen
     def getInsgesamterPreis(self):
         return self.insgesamterPreis
-
-    def updatePreis(self, aktuellerPreis):
-        differenz = float(aktuellerPreis) - float(self.aktuellerPreis)
-        self.insgesamterPreis += differenz
-        self.aktuellerPreis = aktuellerPreis
+    
+    def setInsgesamterPreis(self, insgesamterPreis):
+        self.aktuellerPreis = insgesamterPreis
