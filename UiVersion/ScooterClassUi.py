@@ -6,9 +6,11 @@ class Scooter:
         self.ausleihZeitpunkt = [0,0,0]
         self.rueckgabeZeitpunkt = [0,0,0]
         self.reservierungsZeitpunkt = [0,0,0]
+        self.beginnZeitpunkt = [0,0,0]
 
         self.scooterAusgeliehen = False
         self.scooterReserviert = False
+        self.wasReserviert = False
 
         self.aktuellerPreis = 0
         self.insgesamterPreis = 0
@@ -38,6 +40,15 @@ class Scooter:
         else:
             raise ValueError("Status muss 'True' oder 'False' sein")
 
+    def getScooterWasReserviert(self):
+        return self.wasReserviert    
+
+    def setScooterWasReserviert(self, status):    
+        if isinstance(status, bool):
+            self.wasReserviert = status
+        else:
+            raise ValueError("Status muss 'True' oder 'False' sein")
+
     def setAusleihZeitpunkt(self, ausleih_zeitpunkt):
         self.ausleihZeitpunkt = ausleih_zeitpunkt
 
@@ -56,6 +67,12 @@ class Scooter:
     def setReservierungsZeitpunkt(self, reservierungsZeitpunkt):
         self.reservierungsZeitpunkt = reservierungsZeitpunkt
 
+    def getBeginnZeitpunkt(self):
+        return self.beginnZeitpunkt
+    
+    def setBeginnZeitpunkt(self, beginnZeitpunkt):
+        self.beginnZeitpunkt = beginnZeitpunkt
+
     def getAktuellerPreis(self):
         return self.aktuellerPreis
   
@@ -65,8 +82,6 @@ class Scooter:
     # TODO: Gesamt Preis fixen
     def getInsgesamterPreis(self):
         return self.insgesamterPreis
-
-    def updatePreis(self, aktuellerPreis):
-        differenz = float(aktuellerPreis) - float(self.aktuellerPreis)
-        self.insgesamterPreis += differenz
-        self.aktuellerPreis = aktuellerPreis
+    
+    def setInsgesamterPreis(self, insgesamterPreis):
+        self.insgesamterPreis = insgesamterPreis
