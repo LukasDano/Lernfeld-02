@@ -10,6 +10,7 @@ class Scooter:
 
         self.scooterAusgeliehen = False
         self.scooterReserviert = False
+        self.wasReserviert = False
 
         self.aktuellerPreis = 0
         self.insgesamterPreis = 0
@@ -36,6 +37,15 @@ class Scooter:
     def setScooterReserviert(self, status):    
         if isinstance(status, bool):
             self.scooterReserviert = status
+        else:
+            raise ValueError("Status muss 'True' oder 'False' sein")
+
+    def getScooterWasReserviert(self):
+        return self.wasReserviert    
+
+    def setScooterWasReserviert(self, status):    
+        if isinstance(status, bool):
+            self.wasReserviert = status
         else:
             raise ValueError("Status muss 'True' oder 'False' sein")
 
@@ -74,4 +84,4 @@ class Scooter:
         return self.insgesamterPreis
     
     def setInsgesamterPreis(self, insgesamterPreis):
-        self.aktuellerPreis = insgesamterPreis
+        self.insgesamterPreis = insgesamterPreis

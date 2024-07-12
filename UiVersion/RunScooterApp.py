@@ -95,7 +95,7 @@ def update_reservePrice(updatingLabel):
     if seconds != 0:
         timeInMinutes += 1
 
-    currentPrice = app.getRentPrice(timeInMinutes)
+    currentPrice = app.getReservePrice(timeInMinutes)
     #currentScooter.updatePreis(currentPrice)
     currentScooter.setAktuellerPreis(currentPrice)
     #print(currentScooter.getAktuellerPreis())
@@ -130,7 +130,7 @@ def scooterAusleihenUi(id):
     app.scooterAusleihen(id)
     show_frame(scooterFahrtUebersicht)
 
-def scooterZurueckgebenByIdUi(id):
+def scooterZurueckgebenUi(id):
     global selectedScooter
     selectedScooter = id
     
@@ -223,7 +223,7 @@ def create_scooterFahrtUebersichtRueckgabe():
     dauerAusleihenField.pack(pady=1)
 
     #rueckgabePreisText = f"Deine Fahrt kostet insgesammt {app.getScooterById(selectedScooter).getInsgesamterPreis()}€"
-    rueckgabePreisText = f"Preis dieser Fahrt {app.getScooterById(selectedScooter).getAktuellerPreis()}€"
+    rueckgabePreisText = f"Preis dieser Fahrt {app.getScooterById(selectedScooter).getInsgesamterPreis()}€"
     priceDriveField = ctk.CTkLabel(scooterFahrtUebersichtRueckgabe, text=rueckgabePreisText, font=("Calibri", 18))
     priceDriveField.pack(pady=1)
 
@@ -248,7 +248,7 @@ def create_scooterFahrtUebersicht():
     priceDriveField.pack(pady=1)
 
     update_drivePice(priceDriveField)
-    switch_button1 = ctk.CTkButton(scooterFahrtUebersicht, text="Ausleihen beenden", command=lambda: scooterZurueckgebenByIdUi(app.bearbeiteterScooterId))
+    switch_button1 = ctk.CTkButton(scooterFahrtUebersicht, text="Ausleihen beenden", command=lambda: scooterZurueckgebenUi(selectedScooter))
     switch_button1.pack(pady=10)
     switch_button2 = ctk.CTkButton(scooterFahrtUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
     switch_button2.pack(pady=10)
@@ -402,11 +402,7 @@ def runApp():
 
 runApp()
 
-# TODO Zurueckgeben/Quittungsfenster
 # TODO Klassen aufraeumen
-# TODO Evtl. Gesamt Preis ordentlich machen
-#   -> Den Preis so machen wie früher und wenn man fertig ist, speichert man den gesamenten Preis fürs reservieren als "gesamtPreis", dann muss man drauf achten die gebühr nur einmal zu berechnen
-#   -> Wenn man den Scooter zurückgibt addiert man den ausleih Preis (ohne gebühr) in den gesamt preis und gibt diesen dann als "Insgesamter Preis" aus.
 
 # TODO Sortierung nach der Entfernung
 # TODO Datenbank einhängen

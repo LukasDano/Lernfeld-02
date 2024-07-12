@@ -61,11 +61,51 @@ class ScooterRentalApp:
         return formattedPrice
     
     @staticmethod
-    def getRentPrice(timeInMinutes):
+    def getReservePrice(timeInMinutes):
         price = timeInMinutes * ScooterRentalApp.PRICE_PER_MINUTE_RESERVE + ScooterRentalApp.GEBUEHR
 
         formattedPrice = "{:.2f}".format(price)
         return formattedPrice
+    
+    def getGesamterPreisDesAusleihens(self, id):
+        scooter = self.getScooterById(id)
+    
+        ausleihZeitpunkt = scooter.getAusleihZeitpunkt()
+        rueckgabeZeitpunkt = scooter.getRueckgabeZeitpunkt()
+
+        timeDifferance = self.getTimeDifferance(ausleihZeitpunkt, rueckgabeZeitpunkt)#
+
+        hours = timeDifferance[0]
+        minutes = timeDifferance[1]
+        seconds = self.getCurrentTimeStamp()[2]
+
+        timeInMinutes = int(hours) * 60 + int(minutes)
+        if seconds != 0:
+            timeInMinutes += 1
+
+        return timeInMinutes * ScooterRentalApp.PRICE_PER_MINUTE_DRIVE + ScooterRentalApp.GEBUEHR
+
+    def getGesamterPreisDerReservierung(self, id):
+        scooter = self.getScooterById(id)
+    
+        beginnZeitpunkt = scooter.getBeginnZeitpunkt()
+        rueckgabeZeitpunkt = scooter.getRueckgabeZeitpunkt()
+
+        if not scooter.getScooterWasReserviert():
+            return 0
+
+        timeDifferance = self.getTimeDifferance(beginnZeitpunkt, rueckgabeZeitpunkt)#
+
+        hours = timeDifferance[0]
+        minutes = timeDifferance[1]
+        seconds = self.getCurrentTimeStamp()[2]
+
+        timeInMinutes = int(hours) * 60 + int(minutes)
+        if seconds != 0:
+            timeInMinutes += 1
+
+        return timeInMinutes * ScooterRentalApp.PRICE_PER_MINUTE_RESERVE + ScooterRentalApp.GEBUEHR
+
 
     def scooterAusleihen(self, id):
 
@@ -117,9 +157,19 @@ class ScooterRentalApp:
             timeInMinutes = int(hours) * 60 + int(minutes)
             if seconds != 0:
                 timeInMinutes += 1
-            
-            price = self.getDrivePrice(timeInMinutes)
-            #print(f"Preis dieser Fahrt: {price}€")
+
+            preisA = self.getGesamterPreisDesAusleihens(id)
+            preisB = self.getGesamterPreisDerReservierung(id)
+
+            preisGesamt = preisA + preisB
+
+            if selected_scooter.getScooterWasReserviert():
+                preisGesamt -= 1
+
+            formattedPrice = "{:.2f}".format(preisGesamt)
+            selected_scooter.setInsgesamterPreis(formattedPrice)
+
+            selected_scooter.setScooterWasReserviert(False)
 
     def scooterReservieren(self, id):
 
@@ -136,6 +186,7 @@ class ScooterRentalApp:
         if selected_scooter:
             selected_scooter.setReservierungsZeitpunkt([hours, minutes, seconds])
             selected_scooter.setScooterReserviert(True)
+            selected_scooter.setScooterWasReserviert(True)
             
             if selected_scooter.getBeginnZeitpunkt() == [0,0,0]:
                 selected_scooter.setBeginnZeitpunkt(self.getCurrentTimeStamp())
