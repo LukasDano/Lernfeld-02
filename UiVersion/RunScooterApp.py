@@ -147,7 +147,7 @@ def scooterReservierenBeendenUi(id):
 def changeTheme():
     currentTheme = ctk.get_appearance_mode()
 
-    if currentTheme == "dark":
+    if currentTheme == "Dark":
         ctk.set_appearance_mode("light")
     else:
         ctk.set_appearance_mode("dark")
@@ -187,7 +187,7 @@ def create_frontPage():
     reservieren_button.grid(row=1, column=1, pady=12, padx=18)
 
     theme_button = ctk.CTkButton(down_frame, text="Change Theme", command = lambda: changeTheme())
-    theme_button.grid(row=1, column=1, pady=12, padx=18)
+    theme_button.grid(row=2, column=1, pady=12, padx=18)
 
     beenden_button  = ctk.CTkButton(down_frame, text="App beenden", command=root.destroy)
     beenden_button.grid(row=3, column=1, pady=12, padx=18)
