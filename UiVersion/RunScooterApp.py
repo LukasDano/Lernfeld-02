@@ -415,6 +415,7 @@ def runApp():
 runApp()
 
 # TODO Was wen Scooter reserviert ist und man ihn dann manuell auslieht? Soll man dass könen? Custom Nachricht (Messagebox)?
+# TODO SettingsFenster
 
 # TODO Klassen aufraeumen
 
