@@ -108,7 +108,7 @@ def scooterAusleihenUi(id):
     global selectedScooter
     selectedScooter = id
     scooter = app.getScooterById(id)
-    update_frames()
+    create_scooterFahrtUebersicht()
 
     if scooter.getScooterReserviert():
        scooter.setInsgesamterPreis(scooter.getAktuellerPreis())
@@ -125,13 +125,13 @@ def scooterZurueckgebenUi(id):
     selectedScooter = id
     
     app.scooterZurueckgeben(id)
-    update_frames()
+    create_scooterFahrtUebersichtRueckgabe()
     show_frame(scooterFahrtUebersichtRueckgabe)
 
 def scooterReservierenUi(id):
     global selectedScooter
     selectedScooter = id
-    update_frames()
+    create_scooterReservierungsUebersicht()
 
     if(app.getScooterById(id).getScooterReserviert()):
         show_frame(scooterReservierungsUebersicht)
@@ -152,7 +152,7 @@ def changeTheme():
     else:
         ctk.set_appearance_mode("dark")
 
-    update_frames()
+    create_frames()
     show_frame(frontPage)
 
 # Frames erstellen
@@ -393,11 +393,11 @@ def create_avalibleScooter():
 
 # Framemanagement
 def show_frame(frame):
-    update_frames()
+    create_frames()
 
     frame.tkraise()
 
-def update_frames():
+def create_frames():
     create_frontPage()
 
     create_scooterFahrtUebersicht()
@@ -407,7 +407,7 @@ def update_frames():
     create_avalibleScooterReservieren()
 
 def runApp():
-    update_frames()
+    create_frames()
 
     show_frame(frontPage)
     root.mainloop()
