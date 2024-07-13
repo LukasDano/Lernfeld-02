@@ -15,7 +15,7 @@ selectedScooter = 1
 root = ctk.CTk()
 root.title("ScooTeq App")
 root.iconbitmap("UiVersion/scooTecIcon.ico")
-root.geometry("550x380")
+root.geometry("562x380")
 
 def getUhrzeit():
     now = datetime.now()
@@ -170,10 +170,10 @@ def create_frontPage():
 
     logo_label = tk.Label(upper_frame, image=logo_image)
     logo_label.image = logo_image
-    logo_label.grid(row=0, column=0, pady=10, padx=10) 
+    logo_label.grid(row=0, column=0, pady=12, padx=10) 
 
     label = ctk.CTkLabel(upper_frame, text="Willkommen bei der ScooTeq GmbH!", font=("Helvetica", 15, "bold"))
-    label.grid(row=0, column=1, pady=12, padx=10)
+    label.grid(row=0, column=1, pady=10, padx=10)
 
     down_frame = ctk.CTkFrame(frontPage)
     down_frame.grid(row=1, column=0, sticky='nsew', pady=5, padx=5)
