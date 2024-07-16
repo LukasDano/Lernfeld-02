@@ -24,6 +24,11 @@ Als Kunde von **ScooTeq** haben sie also keinen Grund sich die App nicht sofort 
 ![lightMode](lightTheme.png)
 
 
+### Upcomming Features
+- Sortierung nach der Entfernung
+- LogIn erstellen
+- Datenbank einhängen
+
 ### Development Requirements
 
 - [Python](https://www.python.org/downloads/)

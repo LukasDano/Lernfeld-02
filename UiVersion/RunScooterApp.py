@@ -259,12 +259,12 @@ def create_scooterFahrtUebersicht():
     priceDriveField.pack(pady=1)
 
     update_drivePice(priceDriveField)
-    switch_button1 = ctk.CTkButton(scooterFahrtUebersicht, text="Ausleihen beenden", command=lambda: scooterZurueckgebenUi(selectedScooter))
-    switch_button1.pack(pady=10)
-    switch_button2 = ctk.CTkButton(scooterFahrtUebersicht, text="Zurück zur Übersicht", command=lambda: show_frame(avalibleScooter))
-    switch_button2.pack(pady=10)
-    switch_button3 = ctk.CTkButton(scooterFahrtUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
-    switch_button3.pack(pady=10)
+    zurueckgeben_button = ctk.CTkButton(scooterFahrtUebersicht, text="Ausleihen beenden", command=lambda: scooterZurueckgebenUi(selectedScooter))
+    zurueckgeben_button.pack(pady=10)
+    uebersicht_button = ctk.CTkButton(scooterFahrtUebersicht, text="Zurück zur Übersicht", command=lambda: show_frame(avalibleScooter))
+    uebersicht_button.pack(pady=10)
+    home_button = ctk.CTkButton(scooterFahrtUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
+    home_button.pack(pady=10)
 
 def create_scooterReservierungsUebersicht():
     global scooterReservierungsUebersicht
@@ -284,14 +284,14 @@ def create_scooterReservierungsUebersicht():
     priceRentField.pack(pady=1)
 
     update_reservePrice(priceRentField)
-    switch_button0 = ctk.CTkButton(scooterReservierungsUebersicht, text="Scooter jetzt ausleihen", command=lambda: scooterAusleihenUi(app.bearbeiteterScooterId))
-    switch_button0.pack(pady=10)
-    switch_button1 = ctk.CTkButton(scooterReservierungsUebersicht, text="Reservieren beenden", command=lambda: scooterReservierenBeendenUi(app.bearbeiteterScooterId))
-    switch_button1.pack(pady=10)
-    switch_button2 = ctk.CTkButton(scooterReservierungsUebersicht, text="Zurück zur Übersicht", command=lambda: show_frame(avalibleScooterReservieren))
-    switch_button2.pack(pady=10)
-    switch_button3 = ctk.CTkButton(scooterReservierungsUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
-    switch_button3.pack(pady=10)
+    ausleihen_button = ctk.CTkButton(scooterReservierungsUebersicht, text="Scooter jetzt ausleihen", command=lambda: scooterAusleihenUi(app.bearbeiteterScooterId))
+    ausleihen_button.pack(pady=10)
+    reservierenBeenden_button = ctk.CTkButton(scooterReservierungsUebersicht, text="Reservieren beenden", command=lambda: scooterReservierenBeendenUi(app.bearbeiteterScooterId))
+    reservierenBeenden_button.pack(pady=10)
+    uebersicht_button = ctk.CTkButton(scooterReservierungsUebersicht, text="Zurück zur Übersicht", command=lambda: show_frame(avalibleScooterReservieren))
+    uebersicht_button.pack(pady=10)
+    home_button = ctk.CTkButton(scooterReservierungsUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
+    home_button.pack(pady=10)
     
 def create_avalibleScooterReservieren():
     global avalibleScooterReservieren
@@ -341,8 +341,8 @@ def create_avalibleScooterReservieren():
     back_button_frame = ctk.CTkFrame(avalibleScooterReservieren)
     back_button_frame.grid(row=1, column=0, columnspan=2)
 
-    switch_button2 = ctk.CTkButton(back_button_frame, text="Zurück", command=lambda: show_frame(frontPage))
-    switch_button2.pack(pady=10)
+    back_button = ctk.CTkButton(back_button_frame, text="Zurück", command=lambda: show_frame(frontPage))
+    back_button.pack(pady=10)
 
 def create_avalibleScooter():
     global avalibleScooter
@@ -392,8 +392,8 @@ def create_avalibleScooter():
     back_button_frame = ctk.CTkFrame(avalibleScooter)
     back_button_frame.grid(row=1, column=0, columnspan=2)
 
-    switch_button2 = ctk.CTkButton(back_button_frame, text="Zurück", command=lambda: show_frame(frontPage))
-    switch_button2.pack(pady=10)
+    back_button = ctk.CTkButton(back_button_frame, text="Zurück", command=lambda: show_frame(frontPage))
+    back_button.pack(pady=10)
 
 # Framemanagement
 def show_frame(frame):
@@ -417,12 +417,3 @@ def runApp():
     root.mainloop()
 
 runApp()
-
-# TODO Was wen Scooter reserviert ist und man ihn dann manuell auslieht? Soll man dass könen? Custom Nachricht (Messagebox)?
-# TODO SettingsFenster
-
-# TODO Klassen aufraeumen
-
-# TODO Sortierung nach der Entfernung
-# TODO Datenbank einhängen
-# TODO LogIn erstellen

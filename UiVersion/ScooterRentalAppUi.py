@@ -30,7 +30,6 @@ class ScooterRentalApp:
         for scooter in self.scooter_list:
             if scooter.getId() == id:
                 return scooter
-        #print("Keinen Scooter mit dieser Id gefunden.")
 
     @staticmethod
     def getCurrentTimeStamp():
@@ -73,7 +72,7 @@ class ScooterRentalApp:
         ausleihZeitpunkt = scooter.getAusleihZeitpunkt()
         rueckgabeZeitpunkt = scooter.getRueckgabeZeitpunkt()
 
-        timeDifferance = self.getTimeDifferance(ausleihZeitpunkt, rueckgabeZeitpunkt)#
+        timeDifferance = self.getTimeDifferance(ausleihZeitpunkt, rueckgabeZeitpunkt)
 
         hours = timeDifferance[0]
         minutes = timeDifferance[1]
@@ -112,18 +111,11 @@ class ScooterRentalApp:
         selected_scooter = self.getScooterById(id)
         
         if selected_scooter:
-            #print("\n\n- Scooter Ausleihen -\n")
             aktuelleZeit = self.getCurrentTimeStamp()
             ausleihZeitpunkt = [aktuelleZeit[0], aktuelleZeit[1], aktuelleZeit[2]]
             selected_scooter.setAusleihZeitpunkt(ausleihZeitpunkt)
-            #formattedPricePerMinute = "{:.2f}".format(self.PRICE_PER_MINUTE_DRIVE)
             ausleihZeitpunkt = selected_scooter.getAusleihZeitpunkt()
             
-            #print(f"Du hast den Scooter {selected_scooter.getId()} ausgeliehen.")
-            #print(f"Scooter ausgeliehen um: {ausleihZeitpunkt[0]}:{ausleihZeitpunkt[1]} Uhr")
-            #print(f"Die Gebühr zum Ausleihen eines Scooters beträgt {self.PRICE_PER_MINUTE_DRIVE}€")
-            #print(f"Der Preis pro angefangene Minute beträgt {formattedPricePerMinute}€")
-
             if selected_scooter.getBeginnZeitpunkt() == [0,0,0]:
                 selected_scooter.setBeginnZeitpunkt(self.getCurrentTimeStamp())
 
@@ -140,20 +132,14 @@ class ScooterRentalApp:
             selected_scooter.setScooterReserviert(False)
             self.ausgeliehene_scooter.remove(selected_scooter)
             
-            #print("\n\n- Scooter Zurueckgeben -\n")
-           
             ausleihZeitpunkt = selected_scooter.getAusleihZeitpunkt()
             rueckgabeZeitpunkt = selected_scooter.getRueckgabeZeitpunkt()
 
-            #print(f"Scooter zurueckgeben am: {rueckgabeZeitpunkt[0]}:{rueckgabeZeitpunkt[1]} Uhr")
-            
             timeDifference = self.getTimeDifferance(ausleihZeitpunkt, rueckgabeZeitpunkt)
             hours = timeDifference[0]
             minutes = timeDifference[1]
             seconds = self.getCurrentTimeStamp()[2]
 
-            #print(f"Insgesamt ausgeliehene Zeit: {hours} Stunden {minutes} Minuten")
-            
             timeInMinutes = int(hours) * 60 + int(minutes)
             if seconds != 0:
                 timeInMinutes += 1
@@ -199,25 +185,6 @@ class ScooterRentalApp:
     def scooterReservierenBeenden(self, id):
         selected_scooter = self.getScooterById(id)
         selected_scooter.setScooterReserviert(False)
-
-        
-    #def uebersichtScooter(self):
-        #if self.ausgeliehene_scooter:
-            #selected_scooter = None
-           # for scooter in self.ausgeliehene_scooter:
-               # if scooter.getScooterReserviert():
-                   # selected_scooter = scooter
-            
-            #if selected_scooter and selected_scooter.getScooterReserviert():
-                #reservierungsZeitpunkt = selected_scooter.getReservierungsZeitpunkt()
-                #print("Es ist eine Reservierung vorhanden")
-                #print(f"Der Scooter {selected_scooter.getId()} ist für dich reserviert")
-                #if reservierungsZeitpunkt[1] <= 9:
-                #    print(f"Deine Reservierung beginnt um: {reservierungsZeitpunkt[0]}:0{reservierungsZeitpunkt[1]}")
-                #else:
-                #    print(f"Deine Reservierung beginnt um: {reservierungsZeitpunkt[0]}:{reservierungsZeitpunkt[1]}")
-            #else:
-                #print("Du hast keinen Scooter reserviert")
 
     def hasReservierung(self):
         for scooter in self.ausgeliehene_scooter:
