@@ -41,7 +41,7 @@ def update_drivePice(updatingLabel):
     if seconds != 0:
         timeInMinutes += 1
 
-    currentPrice = app.getDrivePrice(timeInMinutes)
+    currentPrice = app.getDrivePrice(timeInMinutes, selectedScooter)
     currentScooter.setAktuellerPreis(currentPrice)
 
     updatingLabel.configure(text=f"Aktueller Preis: {currentPrice}€")

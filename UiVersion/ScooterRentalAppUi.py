@@ -16,6 +16,7 @@ class ScooterRentalApp:
         self.scooter = ScooterClassUi.Scooter
         self.scooter_list = []
         self.ausgeliehene_scooter = []
+        self.firstCall = True
 
         for i in range(10):
             scooter_for_list = self.scooter(i + 1, self.getRandomStandort())
@@ -53,9 +54,13 @@ class ScooterRentalApp:
         
         return [hours, minutes, seconds]
 
-    @staticmethod
-    def getDrivePrice(timeInMinutes):
+    def getDrivePrice(self,timeInMinutes, id):
         price = timeInMinutes * ScooterRentalApp.PRICE_PER_MINUTE_DRIVE + ScooterRentalApp.GEBUEHR
+
+        if self.getScooterById(id).getScooterWasReserviert() and self.firstCall:
+            self.firstCall = False
+            price -= ScooterRentalApp.GEBUEHR
+
         formattedPrice = "{:.2f}".format(price)
         return formattedPrice
     
