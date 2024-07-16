@@ -261,8 +261,10 @@ def create_scooterFahrtUebersicht():
     update_drivePice(priceDriveField)
     switch_button1 = ctk.CTkButton(scooterFahrtUebersicht, text="Ausleihen beenden", command=lambda: scooterZurueckgebenUi(selectedScooter))
     switch_button1.pack(pady=10)
-    switch_button2 = ctk.CTkButton(scooterFahrtUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
+    switch_button2 = ctk.CTkButton(scooterFahrtUebersicht, text="Zurück zur Übersicht", command=lambda: show_frame(avalibleScooter))
     switch_button2.pack(pady=10)
+    switch_button3 = ctk.CTkButton(scooterFahrtUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
+    switch_button3.pack(pady=10)
 
 def create_scooterReservierungsUebersicht():
     global scooterReservierungsUebersicht
@@ -286,8 +288,10 @@ def create_scooterReservierungsUebersicht():
     switch_button0.pack(pady=10)
     switch_button1 = ctk.CTkButton(scooterReservierungsUebersicht, text="Reservieren beenden", command=lambda: scooterReservierenBeendenUi(app.bearbeiteterScooterId))
     switch_button1.pack(pady=10)
-    switch_button2 = ctk.CTkButton(scooterReservierungsUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
+    switch_button2 = ctk.CTkButton(scooterReservierungsUebersicht, text="Zurück zur Übersicht", command=lambda: show_frame(avalibleScooterReservieren))
     switch_button2.pack(pady=10)
+    switch_button3 = ctk.CTkButton(scooterReservierungsUebersicht, text="Zurück zur Startseite", command=lambda: show_frame(frontPage))
+    switch_button3.pack(pady=10)
     
 def create_avalibleScooterReservieren():
     global avalibleScooterReservieren
